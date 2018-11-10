@@ -2,13 +2,13 @@ package ar.edu.iua.project.parcial.business.implementation;
 
 import ar.edu.iua.project.parcial.business.IListaBusiness;
 import ar.edu.iua.project.parcial.exceptions.BusinessException;
+import ar.edu.iua.project.parcial.exceptions.InvalidListNameException;
 import ar.edu.iua.project.parcial.exceptions.NotFoundException;
 import ar.edu.iua.project.parcial.model.Lista;
-import ar.edu.iua.project.parcial.model.persistence.ListaRepository;
+import ar.edu.iua.project.parcial.persistence.dao.FactoryDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,79 +16,74 @@ import java.util.Optional;
 public class ListaBusiness implements IListaBusiness {
 
     @Autowired
-    private ListaRepository listaDAO;
+    private ListaBusiness listaBusiness;
+
 
     @Override
     public List<Lista> getAll() throws BusinessException {
         try{
-            return listaDAO.findAll();
+            return FactoryDAO.getInstance().getListaDAO().getAll();
         }catch (Exception e){
             throw new BusinessException();
         }
     }
 
-    @Override
-    public void delete(Lista lista) throws BusinessException, NotFoundException {
-        Optional<Lista> lis = null;
 
-        lis = listaDAO.findById(lista.getId());
-        if(!lis.isPresent()){
+    @Override
+    public Lista add(Lista lista) throws BusinessException, NotFoundException, InvalidListNameException {
+        String nombre = lista.getNombre();
+        //(backlog, TO-DO, in progress, waiting, done)
+        if(nombre.equalsIgnoreCase("backlog")
+                || nombre.equalsIgnoreCase("todo")
+                || nombre.equalsIgnoreCase("in progress")
+                || nombre.equalsIgnoreCase("waiting")
+                || nombre.equalsIgnoreCase("done")) {
+            Lista spln = (Lista) FactoryDAO.getInstance().getListaDAO().getOne(nombre);
+            if(spln == null) {
+                Lista sl = (Lista) FactoryDAO.getInstance().getListaDAO().save(lista);
+                return sl;
+            }else{
+                throw new InvalidListNameException();
+            }
+        }else{
+            throw new InvalidListNameException();
+        }
+    }
+
+    @Override
+    public Lista getOne(String nombre) throws BusinessException, NotFoundException {
+        try {
+            Lista spln = (Lista) FactoryDAO.getInstance().getListaDAO().getOne(nombre);
+            return spln;
+        } catch (NotFoundException nfe) {
             throw new NotFoundException();
         }
-
-        try{
-            listaDAO.delete(lista);
-        }catch (Exception e){
-            throw new BusinessException();
-        }
-    }
-
-    @Override
-    public Lista add(Lista lista) throws BusinessException {
-        try{
-            return listaDAO.save(lista);
-        }catch (Exception e){
-            throw new BusinessException();
-        }
-
-    }
-
-    @Override
-    public Lista getOne(int id) throws BusinessException, NotFoundException {
-        Optional<Lista> lis = null;
-        try{
-            lis = listaDAO.findById(id);
-        }catch (Exception e){
-            throw new BusinessException();
-        }
-        if(!lis.isPresent()){
-            throw new NotFoundException();
-        }
-
-        return lis.get();
     }
 
     @Override
     public Lista update(Lista lista) throws BusinessException, NotFoundException {
-        Optional<Lista> lis = null;
-        lis = listaDAO.findById(lista.getId());
-        if (!lis.isPresent())
-            throw new NotFoundException();
         try {
-
-            return listaDAO.save(lista);
-
+            if (getOneId(lista.getId())!=null) {
+                return (Lista) FactoryDAO.getInstance().getListaDAO().update(lista);
+            }else{
+                throw new NotFoundException();
+            }
+        }catch (NotFoundException nfe) {
+            throw new NotFoundException(nfe);
         } catch (Exception e) {
             throw new BusinessException(e);
         }
     }
 
     @Override
-    public List<Lista> search(String part) throws BusinessException {
+    public Lista getOneId(int id) throws BusinessException, NotFoundException {
         try {
-            return listaDAO.findByNombreContaining(part);
-        } catch (Exception e) {
-            throw new BusinessException(e);
+            Lista spln = (Lista) FactoryDAO.getInstance().getListaDAO().getOneId(id);
+            return spln;
+        } catch (NotFoundException nfe) {
+            throw new NotFoundException();
+        } catch (BusinessException be) {
+            throw new BusinessException();
         }
     }
 

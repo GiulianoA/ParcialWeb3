@@ -1,77 +1,57 @@
 package ar.edu.iua.project.parcial.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
-
-//@Table(name = "tarea")
 @Entity
-@Table(name = "tarea")
+@Table(name = "tareabd")
 public class Tarea {
 
-    public Tarea() {
-
-    }
-
-
-
-    public Tarea(int id,int estimacion , String fecha_creacion, String fecha_modificacion, String nombre, String prioridad,Lista lista
-                 ) {
-        super();
-        this.id = id;
-        this.estimacion = estimacion;
-        this.fecha_creacion = fecha_creacion;
-        this.fecha_modificacion = fecha_modificacion;
-        this.nombre = nombre;
-        this.prioridad = prioridad;
-        this.lista = lista;
-    }
-
-
-
-
-    //@GeneratedValue(strategy=GenerationType.IDENTITY)
-    //@Column(name = "id", nullable = false)
     @Id
-    @GeneratedValue
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "tarea_id", nullable = false)
+    private Integer id;
 
-    //@Column(name = "estimacion")
-    private int estimacion;
-
-    //@Column(name = "fecha_creacion", length = 50)
-    private String fecha_creacion;
-
-    //@Column(name = "fecha_modificacion" , length = 50)
-    private String fecha_modificacion;
-
-   // @Column(name = "nombre" ,  length = 50)
+    @Column(name = "nombre")
     private String nombre;
-
-
-   // @Column(name="prioridad", length = 50)
+    @Column(name = "fecha_creacion")
+    private String fechaCreacion;
+    @Column(name = "fecha_modificacion")
+    private String fecha_modificacion;
+    @Column(name = "prioridad")
     private String prioridad;
 
+    @ManyToOne
+    @JoinColumn(name = "lista_id", nullable = false)
+    //@JsonIgnoreProperties("tarea")
+    private Lista listaNombre;
+    @Column(name = "estimacion")
+    private Integer estimacion;
 
-    @ManyToOne //lazy
-    @JoinColumn(name="id_lista",nullable = true)
-    private Lista lista;
+
+    public Tarea(String nombre, String fechaCreacion, String fecha_modificacion, String prioridad, Lista listaNombre, Integer estimacion) {
+        super();
+        this.nombre = nombre;
+        this.fechaCreacion = fechaCreacion;
+        this.fecha_modificacion = fecha_modificacion;
+        this.prioridad = prioridad;
+        this.listaNombre = listaNombre;
+        this.estimacion = estimacion;
+    }
+
+    public Tarea(){
+        super();
+    }
 
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Lista getLista() {
-        return lista;
-    }
-
-    public void setLista(Lista lista) {
-        this.lista = lista;
     }
 
     public String getNombre() {
@@ -82,20 +62,20 @@ public class Tarea {
         this.nombre = nombre;
     }
 
+    public String getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(String fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
     public String getFecha_modificacion() {
         return fecha_modificacion;
     }
 
     public void setFecha_modificacion(String fecha_modificacion) {
         this.fecha_modificacion = fecha_modificacion;
-    }
-
-    public String getFecha_creacion() {
-        return fecha_creacion;
-    }
-
-    public void setFecha_creacion(String fecha_creacion) {
-        this.fecha_creacion = fecha_creacion;
     }
 
     public String getPrioridad() {
@@ -106,11 +86,19 @@ public class Tarea {
         this.prioridad = prioridad;
     }
 
-    public int getEstimacion() {
+    public Lista getLista() {
+        return listaNombre;
+    }
+
+    public void setLista(Lista lista) {
+        this.listaNombre = lista;
+    }
+
+    public Integer getEstimacion() {
         return estimacion;
     }
 
-    public void setEstimacion(int estimacion) {
+    public void setEstimacion(Integer estimacion) {
         this.estimacion = estimacion;
     }
 }

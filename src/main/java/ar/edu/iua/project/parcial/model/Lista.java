@@ -1,54 +1,52 @@
 package ar.edu.iua.project.parcial.model;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.List;
 
 @Entity
-@Table(name = "lista")
+@Table(name = "listabd")
 public class Lista {
-
-    public Lista() {
-
-    }
-
-    public Lista(int idLista, String nombre, String sprint) {
-        super();
-        this.idLista = idLista;
-        this.nombre = nombre;
-        this.sprint = sprint;
-    }
 
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int idLista;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "lista_id")
+    private Integer id;
 
+    @Column(name = "nombre")
     private String nombre;
+
+    @Column(name = "sprint")
     private String sprint;
 
-    @OneToMany(mappedBy="lista")   //eager
+    //@OneToMany(mappedBy = "listaNombre", fetch = FetchType.LAZY)
+    //@OneToMany(mappedBy = "listaNombre", fetch = FetchType.EAGER)
+    //@JsonIgnoreProperties("listaNombre")
+    @OneToMany(mappedBy = "listaNombre")
     @JsonIgnore
     private List<Tarea> tarea;
 
-
-
-    public List<Tarea> getTarea() {
-        return tarea;
+    public Lista() {
+        super();
     }
 
-    public void setTarea(List<Tarea> tarea) {
+    public Lista(Integer id,String nombre, String sprint, List<Tarea> tarea) {
+        super();
+        this.id = id;
+        this.nombre = nombre;
+        this.sprint = sprint;
         this.tarea = tarea;
     }
 
-    public int getId() {
-        return idLista;
+    public Integer getId() {
+        return id;
     }
 
-    public void setId(int idLista) {
-        this.idLista = idLista;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -67,5 +65,11 @@ public class Lista {
         this.sprint = sprint;
     }
 
+    public List<Tarea> getTarea() {
+        return tarea;
+    }
 
+    public void setTarea(List<Tarea> tarea) {
+        this.tarea = tarea;
+    }
 }

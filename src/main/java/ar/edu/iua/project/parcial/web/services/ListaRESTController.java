@@ -1,18 +1,17 @@
 package ar.edu.iua.project.parcial.web.services;
 
-
 import ar.edu.iua.project.parcial.business.IListaBusiness;
 import ar.edu.iua.project.parcial.exceptions.BusinessException;
+import ar.edu.iua.project.parcial.exceptions.InvalidListNameException;
 import ar.edu.iua.project.parcial.exceptions.NotFoundException;
 import ar.edu.iua.project.parcial.model.Lista;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 @RestController
 @RequestMapping(Constantes.URL_LISTA)
@@ -20,79 +19,67 @@ public class ListaRESTController {
 
     @Autowired
     private IListaBusiness listaBusiness;
+   // final static Logger logger = Logger.getLogger("TaskRESTController.class");
 
 
-    @RequestMapping(value = {"", "/"}, method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<List<Lista>> lista(
-            @RequestParam(required = false, value = "q", defaultValue = "*") String q) {
 
+    @RequestMapping(value = { "", "/" }, method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<List<Lista>> getAll() {
         try {
-            if (q.equals("*") || q.trim().length() == 0) {
-                return new ResponseEntity<List<Lista>>(listaBusiness.getAll(), HttpStatus.OK);
-            } else {
-                return new ResponseEntity<List<Lista>>(listaBusiness.search(q), HttpStatus.OK);
-            }
+           // logger.trace("Getting all task lists");
+            return new ResponseEntity<List<Lista>>(listaBusiness.getAll(), HttpStatus.OK);
         } catch (BusinessException e) {
+            //logger.error("Http status:" + HttpStatus.INTERNAL_SERVER_ERROR + " in getAll()");
             return new ResponseEntity<List<Lista>>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-
-    @RequestMapping(value = { "/{id}" }, method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<Lista> uno(@PathVariable("id") int id) {
+    @RequestMapping(value = { "/{name}" }, method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<Lista> getId(@PathVariable("name") String name) {
         try {
-            return new ResponseEntity<Lista>(listaBusiness.getOne(id), HttpStatus.OK);
+           // logger.debug("Trying to get the following list: " + name);
+            return new ResponseEntity<Lista>(listaBusiness.getOne(name), HttpStatus.OK);
         } catch (BusinessException e) {
+           // logger.error("Http status:" + HttpStatus.INTERNAL_SERVER_ERROR + " in getId()");
             return new ResponseEntity<Lista>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (NotFoundException e) {
+          //  logger.error("Http status:" + HttpStatus.NOT_FOUND + " in getId()");
             return new ResponseEntity<Lista>(HttpStatus.NOT_FOUND);
         }
-
     }
-
-
 
     @RequestMapping(value = { "", "/" }, method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<Object> add(@RequestBody Lista lista) {
+    public ResponseEntity<Lista> add(@RequestBody Lista lista) {
         try {
-            listaBusiness.add(lista);
+            Lista sl = listaBusiness.add(lista);
             HttpHeaders responseHeaders = new HttpHeaders();
-            responseHeaders.set("location", "/listas/" + lista.getId());
-            return new ResponseEntity<Object>(responseHeaders, HttpStatus.CREATED);
-        } catch (BusinessException e) {
-            return new ResponseEntity<Object>(HttpStatus.INTERNAL_SERVER_ERROR);
+            responseHeaders.set("location", "/list/" + lista.getId());
+          //  logger.debug("Adding the following list: \n" + sl);
+            return new ResponseEntity<Lista>(sl, responseHeaders, HttpStatus.CREATED);
+        } catch (InvalidListNameException iln) {
+           // logger.error("Http status:" + HttpStatus.NOT_ACCEPTABLE + " in add(), the list name is invalid");
+            return new ResponseEntity<Lista>(HttpStatus.NOT_ACCEPTABLE);
+        } catch (BusinessException be) {
+           // logger.error("Http status:" + HttpStatus.NOT_FOUND + " in add()");
+            return new ResponseEntity<Lista>(HttpStatus.NOT_FOUND);
+        } catch (NotFoundException nfe) {
+          //  logger.error("Http status:" + HttpStatus.NOT_FOUND + " in add()");
+            return new ResponseEntity<Lista>(HttpStatus.NOT_FOUND);
         }
-
     }
 
-    @RequestMapping(value = { "", "/" }, method = RequestMethod.PUT, produces = "application/json")
-    public ResponseEntity<Object> update(@RequestBody Lista lista) {
+    @RequestMapping(value = { "/{id}" }, method = RequestMethod.PUT, produces = "application/json")
+    public ResponseEntity<Lista> update(@PathVariable("id") int id, @RequestBody Lista sprintList) {
         try {
-            listaBusiness.update(lista);
-            return new ResponseEntity<Object>(HttpStatus.OK);
-        } catch (BusinessException e) {
-            return new ResponseEntity<Object>(HttpStatus.INTERNAL_SERVER_ERROR);
-        } catch (NotFoundException e) {
-            return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
-        }
-
-    }
-
-    @RequestMapping(value = { "/{id}" }, method = RequestMethod.DELETE, produces = "application/json")
-    public ResponseEntity<Lista> delete(@PathVariable("id") int id) {
-        try {
-            Lista l = new Lista();
-            l.setId(id);
-            listaBusiness.delete(l);
+            sprintList.setId(id);
+            listaBusiness.update(sprintList);
             return new ResponseEntity<Lista>(HttpStatus.OK);
         } catch (BusinessException e) {
             return new ResponseEntity<Lista>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (NotFoundException e) {
             return new ResponseEntity<Lista>(HttpStatus.NOT_FOUND);
         }
-
     }
-
 
 
 }

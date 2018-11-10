@@ -1,4 +1,4 @@
-package ar.edu.iua.project.parcial.dao;
+package ar.edu.iua.project.parcial.persistence.dao;
 
 import org.springframework.context.annotation.Bean;
 
@@ -18,13 +18,13 @@ public class FactoryDAO {
 
     private static String dataBaseActive = "MYSQL";
 
-    public static TareaImplementationDAO getTareaDAO() {
+    public static IGenericDAO getListaDAO() {
 
         if(dataBaseActive == "MYSQL"){
-            return TareaImplementationDAO.getInstance();
+            return ListaDaoImplementacion.getInstance();
         }
     /*    else {
-            return BillingOracleImpDAO.getInstance();
+
         }
      */
         return null;
