@@ -6,7 +6,6 @@ import ar.edu.iua.project.parcial.exceptions.NotFoundException;
 import java.io.Serializable;
 import java.util.List;
 
-//public interface IGenericDAO<T, ID extends Serializable> extends JpaRepository<T, Integer> {
 public interface IGenericDAO<T, ID extends Serializable> {
     Object save (T Object);
     List<T> getAll();

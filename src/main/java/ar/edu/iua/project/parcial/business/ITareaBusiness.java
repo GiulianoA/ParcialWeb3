@@ -8,11 +8,9 @@ import java.util.List;
 
 public interface ITareaBusiness {
 
-    public List<Tarea> getAll() throws BusinessException;
-    public void delete(Tarea tarea) throws BusinessException, NotFoundException;
     public Tarea add (Tarea tarea) throws BusinessException;
+    public List<Tarea> getAll() throws BusinessException;
     public Tarea getOne(String nombre) throws BusinessException, NotFoundException;
+    public void delete(Tarea tarea) throws BusinessException, NotFoundException;
     public Tarea update(Tarea tarea) throws BusinessException, NotFoundException;
-   // public List<Tarea> search(String part) throws BusinessException;
-
 }

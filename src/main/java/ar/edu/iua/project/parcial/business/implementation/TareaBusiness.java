@@ -28,56 +28,6 @@ public class TareaBusiness implements ITareaBusiness {
     private ListaDaoImplementacion listaDaoImplementacion;
 
     @Override
-    public List<Tarea> getAll() throws BusinessException {
-        try {
-            return tareaDAO.findAll();
-        } catch (Exception e) {
-            throw new BusinessException(e);
-        }
-    }
-
-    @Override
-    public Tarea add(Tarea tarea) throws BusinessException {
-        try {
-            Lista sl = (Lista) FactoryDAO.getInstance().getListaDAO().getOne(initialList);
-            if (sl!=null) {
-                tarea.setLista(sl);
-                //logger.debug("Task with name: "+ tarea.getName() + " has been created" + " in "+ tarea.getListName());
-                return tareaDAO.save(tarea);
-            }else {
-               // logger.error("Task with name: "+ sprintTask.getName() + " couldn't been created, because the List is null");
-                throw new ListaNotFoundException();
-            }
-
-        } catch (Exception e) {
-            //logger.trace("Business Exception in method 'add' :( ");
-            throw new BusinessException(e);
-        }
-    }
-
-    @Override
-    public Tarea getOne(String nombre) throws BusinessException, NotFoundException {
-        List<Tarea> stl = tareaDAO.findAll();
-        Tarea tarea = null;
-
-        for (Tarea st : stl) {
-            if (st.getNombre().equalsIgnoreCase(nombre)) {
-                tarea = st;
-            }
-        }
-        if (tarea==null) {
-            //logger.error("Task is null, so we can't found the Task required");
-            throw new NotFoundException();
-        }
-        try {
-            //logger.info("Task found it! "+ sprintTask.getName());
-            return tarea;
-        } catch(Exception e) {
-            throw new BusinessException(e);
-        }
-    }
-
-    @Override
     public Tarea update(Tarea tarea) throws BusinessException, NotFoundException {
         Optional<Tarea> st = tareaDAO.findById(tarea.getId());
         Lista lis = listaDaoImplementacion.getOneId(tarea.getLista().getId());
@@ -104,13 +54,63 @@ public class TareaBusiness implements ITareaBusiness {
                 !lis.getNombre().equalsIgnoreCase("done")){
             throw new BusinessException();
         }
-            try {
-                //logger.debug("Task with name: "+ sprintTask.getName() + " has been updated");
+        try {
+            //logger.debug("Task with name: "+ sprintTask.getName() + " has been updated");
+            return tareaDAO.save(tarea);
+        } catch (Exception e) {
+            throw new BusinessException(e);
+        }
+
+    }
+
+    @Override
+    public Tarea getOne(String nombre) throws BusinessException, NotFoundException {
+        List<Tarea> stl = tareaDAO.findAll();
+        Tarea tarea = null;
+
+        for (Tarea st : stl) {
+            if (st.getNombre().equalsIgnoreCase(nombre)) {
+                tarea = st;
+            }
+        }
+        if (tarea==null) {
+            //logger.error("Task is null, so we can't found the Task required");
+            throw new NotFoundException();
+        }
+        try {
+            //logger.info("Task found it! "+ sprintTask.getName());
+            return tarea;
+        } catch(Exception e) {
+            throw new BusinessException(e);
+        }
+    }
+
+    @Override
+    public List<Tarea> getAll() throws BusinessException {
+        try {
+            return tareaDAO.findAll();
+        } catch (Exception e) {
+            throw new BusinessException(e);
+        }
+    }
+
+    @Override
+    public Tarea add(Tarea tarea) throws BusinessException {
+        try {
+            Lista sl = (Lista) FactoryDAO.getInstance().getListaDAO().getOne(initialList);
+            if (sl!=null) {
+                tarea.setLista(sl);
+                //logger.debug("Task with name: "+ tarea.getName() + " has been created" + " in "+ tarea.getListName());
                 return tareaDAO.save(tarea);
-            } catch (Exception e) {
-                throw new BusinessException(e);
+            }else {
+               // logger.error("Task with name: "+ sprintTask.getName() + " couldn't been created, because the List is null");
+                throw new ListaNotFoundException();
             }
 
+        } catch (Exception e) {
+            //logger.trace("Business Exception in method 'add' :( ");
+            throw new BusinessException(e);
+        }
     }
 
     @Override

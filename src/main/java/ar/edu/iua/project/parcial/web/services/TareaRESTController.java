@@ -21,15 +21,19 @@ public class TareaRESTController {
     private ITareaBusiness tareaBusiness;
    // final static Logger logger = Logger.getLogger("TaskRESTController.class");
 
-    @RequestMapping(value = { "", "/" }, method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<List<Tarea>> getAll() {
+    @RequestMapping(value = {"","/"}, method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity<Tarea> add(@RequestBody Tarea tarea){
         try {
-            //logger.trace("Getting all tasks");
-            return new ResponseEntity<List<Tarea>>(tareaBusiness.getAll(), HttpStatus.OK);
-        } catch (BusinessException e) {
-            //logger.error("Http status:" + HttpStatus.INTERNAL_SERVER_ERROR + " in getAll()");
-            return new ResponseEntity<List<Tarea>>(HttpStatus.INTERNAL_SERVER_ERROR);
+            Tarea st = tareaBusiness.add(tarea);
+            HttpHeaders responseHeaders = new HttpHeaders();
+            responseHeaders.set("location", "/tareas/" + tarea.getId());
+            //logger.debug("Adding the following task: \n" + st);
+            return new ResponseEntity<Tarea>(st, responseHeaders, HttpStatus.CREATED);
+        } catch (BusinessException be) {
+            //logger.error("Http status:" + HttpStatus.NOT_FOUND + " in add()");
+            return new ResponseEntity<Tarea>(HttpStatus.NOT_FOUND);
         }
+
     }
 
     @RequestMapping(value = { "/{nombre}" }, method = RequestMethod.GET, produces = "application/json")
@@ -46,32 +50,15 @@ public class TareaRESTController {
         }
     }
 
-    @RequestMapping(value = {"","/"}, method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<Tarea> add(@RequestBody Tarea tarea){
+    @RequestMapping(value = { "", "/" }, method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<List<Tarea>> getAll() {
         try {
-            Tarea st = tareaBusiness.add(tarea);
-            HttpHeaders responseHeaders = new HttpHeaders();
-            responseHeaders.set("location", "/tareas/" + tarea.getId());
-            //logger.debug("Adding the following task: \n" + st);
-            return new ResponseEntity<Tarea>(st, responseHeaders, HttpStatus.CREATED);
-        } catch (BusinessException be) {
-            //logger.error("Http status:" + HttpStatus.NOT_FOUND + " in add()");
-            return new ResponseEntity<Tarea>(HttpStatus.NOT_FOUND);
+            //logger.trace("Getting all tasks");
+            return new ResponseEntity<List<Tarea>>(tareaBusiness.getAll(), HttpStatus.OK);
+        } catch (BusinessException e) {
+            //logger.error("Http status:" + HttpStatus.INTERNAL_SERVER_ERROR + " in getAll()");
+            return new ResponseEntity<List<Tarea>>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-
-        /*
-        * {
-        "nombre": "POSTEAADDDO",
-        "fechaCreacion": "v",
-        "fecha_modificacion": "c",
-        "prioridad": "a",
-        "estimacion": 1,
-        "lista": {
-            "id": 1
-       }
-       }*/
-
     }
 
     @RequestMapping(value = { "/{id}" }, method = RequestMethod.PUT, produces = "application/json")
@@ -88,31 +75,16 @@ public class TareaRESTController {
             //logger.error("Http status:" + HttpStatus.NOT_FOUND + " in update()");
             return new ResponseEntity<Tarea>(HttpStatus.NOT_FOUND);
         }
-    /*
-    * {
-        "nombre": "das",
-        "fechaCreacion": "b",
-        "fecha_modificacion": "b",
-        "prioridad": "cc",
-        "estimacion": 2,
-        "lista": {
-            "id": 1
-        }
-    }*/
 
     }
 
-    @RequestMapping(value = { "", "/" }, method = RequestMethod.DELETE, produces = "application/json")
-    public ResponseEntity<Tarea> delete(
-            @RequestParam(required = false, value = "id", defaultValue = "0") Integer id,
-            @RequestParam(required = false, value = "nombre", defaultValue = "") String nombre) {
+    @RequestMapping(value = { "", "/{id}" }, method = RequestMethod.DELETE, produces = "application/json")
+    public ResponseEntity<Tarea> delete(@PathVariable("id") int id){
+
         try {
             Tarea st = new Tarea();
             if (id!=0) {
                 st.setId(id);
-                tareaBusiness.delete(st);
-            }else if (!nombre.equalsIgnoreCase("") && nombre.length()>0) {
-                st.setNombre(nombre);
                 tareaBusiness.delete(st);
             }else {
                 //logger.error("Http status:" + HttpStatus.NOT_FOUND + " in delete()");
