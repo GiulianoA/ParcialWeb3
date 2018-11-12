@@ -1,8 +1,10 @@
 package ar.edu.iua.project.parcial.persistence.dao;
 
+import ar.edu.iua.project.parcial.business.ITareaBusiness;
 import ar.edu.iua.project.parcial.exceptions.BusinessException;
 import ar.edu.iua.project.parcial.exceptions.NotFoundException;
-import ar.edu.iua.project.parcial.model.Lista;
+import ar.edu.iua.project.parcial.model.ListaSprint;
+import ar.edu.iua.project.parcial.model.TareaSprint;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -21,9 +23,12 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 @Component
-public class ListaDaoImplementacion implements IGenericDAO<Lista, Serializable> {
+public class ListaDaoImplementacion implements IGenericDAO<ListaSprint, Serializable> {
 
     private static ListaDaoImplementacion instance;
+
+    @Autowired
+    ITareaBusiness tareaBusiness;
 
     @Autowired
     private EntityManagerFactory emf;
@@ -40,7 +45,7 @@ public class ListaDaoImplementacion implements IGenericDAO<Lista, Serializable> 
     }
 
     @Override
-    public Lista save(Lista lista) {
+    public ListaSprint save(ListaSprint lista) {
         Session session = emf.unwrap(SessionFactory.class).openSession();
         Transaction tx = null;
 
@@ -60,14 +65,15 @@ public class ListaDaoImplementacion implements IGenericDAO<Lista, Serializable> 
     }
 
     @Override
-    public Lista getOneId(int id) throws BusinessException, NotFoundException {
+    public ListaSprint getOneId(int id) throws BusinessException, NotFoundException {
         Session session = emf.unwrap(SessionFactory.class).openSession();
         Transaction tx = null;
 
         try {
             tx = session.beginTransaction();
 
-            Lista lista = session.get(Lista.class, id);
+            ListaSprint lista = session.get(ListaSprint.class, id);
+            //lista.setTarea(session.get(Tarea.class,lista.getId()));
 
             tx.commit();
 
@@ -85,22 +91,36 @@ public class ListaDaoImplementacion implements IGenericDAO<Lista, Serializable> 
     }
 
     @Override
-    public Lista getOne(String nombre) throws BusinessException, NotFoundException {
+    public ListaSprint getOne(String nombre) throws BusinessException, NotFoundException {
         Session session = emf.unwrap(SessionFactory.class).openSession();
         Transaction tx = null;
-
+        TareaSprint tarea;
         try {
             tx = session.beginTransaction();
 
             session.flush();
             CriteriaBuilder builder = session.getCriteriaBuilder();
 
-            CriteriaQuery<Lista> query = builder.createQuery(Lista.class);
-            Root<Lista> from = query.from(Lista.class);
+            CriteriaQuery<ListaSprint> query = builder.createQuery(ListaSprint.class);
+            Root<ListaSprint> from = query.from(ListaSprint.class);
 
             query.select(from).where(builder.equal(from.get("nombre"), nombre));
 
-            List<Lista> listas = session.createQuery(query).getResultList();
+            List<ListaSprint> listas = session.createQuery(query).getResultList();
+
+            /*
+            List<Tarea> tt = new ArrayList<>();
+            List<Tarea> ta = new ArrayList<>();
+            tt = tareaBusiness.getAll();
+
+            for(Tarea t : tt){
+                if(t.getLista().getId() == listas.get(0).getId()){
+                    ta.add(t);
+                    System.out.println(t.getNombre());
+                }
+            }
+            System.out.println(ta);
+            listas.get(0).setTarea(ta);*/
 
             tx.commit();
             if (listas.isEmpty()) {
@@ -120,7 +140,7 @@ public class ListaDaoImplementacion implements IGenericDAO<Lista, Serializable> 
     }
 
     @Override
-    public List<Lista> getAll() {
+    public List<ListaSprint> getAll() {
         Session session = emf.unwrap(SessionFactory.class).openSession();
         Transaction tx = null;
 
@@ -130,13 +150,16 @@ public class ListaDaoImplementacion implements IGenericDAO<Lista, Serializable> 
             session.flush();
             CriteriaBuilder builder = session.getCriteriaBuilder();
 
-            CriteriaQuery<Lista> query = builder.createQuery(Lista.class);
-            Root<Lista> from = query.from(Lista.class);
+            CriteriaQuery<ListaSprint> query = builder.createQuery(ListaSprint.class);
+            Root<ListaSprint> from = query.from(ListaSprint.class);
 
             query.select(from);
 
-            List<Lista> listas = session.createQuery(query).getResultList();
+            List<ListaSprint> listas = session.createQuery(query).getResultList();
 
+            for(ListaSprint li : listas){
+                li.getNombre().toLowerCase();
+            }
             tx.commit();
 
             return listas;
@@ -150,7 +173,7 @@ public class ListaDaoImplementacion implements IGenericDAO<Lista, Serializable> 
     }
 
     @Override
-    public Lista update(Lista lista) {
+    public ListaSprint update(ListaSprint lista) {
         Session session = emf.unwrap(SessionFactory.class).openSession();
         Transaction tx = null;
 
@@ -170,6 +193,6 @@ public class ListaDaoImplementacion implements IGenericDAO<Lista, Serializable> 
     }
 
     @Override
-    public void delete(Lista lista) throws NotFoundException {
+    public void delete(ListaSprint lista) throws NotFoundException {
     }
 }

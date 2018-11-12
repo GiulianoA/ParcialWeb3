@@ -4,7 +4,8 @@ import ar.edu.iua.project.parcial.business.IListaBusiness;
 import ar.edu.iua.project.parcial.exceptions.BusinessException;
 import ar.edu.iua.project.parcial.exceptions.ListaNotFoundException;
 import ar.edu.iua.project.parcial.exceptions.NotFoundException;
-import ar.edu.iua.project.parcial.model.Lista;
+import ar.edu.iua.project.parcial.model.ListaSprint;
+import org.apache.log4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,68 +20,65 @@ public class ListaRESTController {
 
     @Autowired
     private IListaBusiness listaBusiness;
-   // final static Logger logger = Logger.getLogger("TaskRESTController.class");
+    final static Logger logger = Logger.getLogger("ListaRESTController.class");
 
 
     @RequestMapping(value = { "", "/" }, method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity<Lista> add(@RequestBody Lista lista) {
+    public ResponseEntity<ListaSprint> add(@RequestBody ListaSprint lista) {
         try {
-            Lista sl = listaBusiness.add(lista);
+            ListaSprint l = listaBusiness.add(lista);
             HttpHeaders responseHeaders = new HttpHeaders();
             responseHeaders.set("location", "/listas/" + lista.getId());
-            //  logger.debug("Adding the following list: \n" + sl);
-            return new ResponseEntity<Lista>(sl, responseHeaders, HttpStatus.CREATED);
+              logger.debug("Agrega la lista: \n" + l);
+            return new ResponseEntity<ListaSprint>(l, responseHeaders, HttpStatus.CREATED);
         } catch (ListaNotFoundException iln) {
-            // logger.error("Http status:" + HttpStatus.NOT_ACCEPTABLE + " in add(), the list name is invalid");
-            return new ResponseEntity<Lista>(HttpStatus.NOT_ACCEPTABLE);
+             logger.error("Error nombre de lista");
+            return new ResponseEntity<ListaSprint>(HttpStatus.NOT_ACCEPTABLE);
         } catch (BusinessException be) {
-            // logger.error("Http status:" + HttpStatus.NOT_FOUND + " in add()");
-            return new ResponseEntity<Lista>(HttpStatus.NOT_FOUND);
+             logger.error("Http status:" + HttpStatus.NOT_FOUND + " en add()");
+            return new ResponseEntity<ListaSprint>(HttpStatus.NOT_FOUND);
         } catch (NotFoundException nfe) {
-            //  logger.error("Http status:" + HttpStatus.NOT_FOUND + " in add()");
-            return new ResponseEntity<Lista>(HttpStatus.NOT_FOUND);
+              logger.error("Http status:" + HttpStatus.NOT_FOUND + " en add()");
+            return new ResponseEntity<ListaSprint>(HttpStatus.NOT_FOUND);
         }
     }
 
     @RequestMapping(value = { "/{name}" }, method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<Lista> getId(@PathVariable("name") String name) {
+    public ResponseEntity<ListaSprint> getListbyName(@PathVariable("name") String name) {
         try {
-            // logger.debug("Trying to get the following list: " + name);
-            return new ResponseEntity<Lista>(listaBusiness.getOne(name), HttpStatus.OK);
+            logger.debug("Get lista: " + name);
+            return new ResponseEntity<ListaSprint>(listaBusiness.getOne(name), HttpStatus.OK);
         } catch (BusinessException e) {
-            // logger.error("Http status:" + HttpStatus.INTERNAL_SERVER_ERROR + " in getId()");
-            return new ResponseEntity<Lista>(HttpStatus.INTERNAL_SERVER_ERROR);
+            logger.error("Error id");
+            return new ResponseEntity<ListaSprint>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (NotFoundException e) {
-            //  logger.error("Http status:" + HttpStatus.NOT_FOUND + " in getId()");
-            return new ResponseEntity<Lista>(HttpStatus.NOT_FOUND);
+            logger.error("Id no encontrado");
+            return new ResponseEntity<ListaSprint>(HttpStatus.NOT_FOUND);
         }
     }
 
     @RequestMapping(value = { "", "/" }, method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<List<Lista>> getAll() {
+    public ResponseEntity<List<ListaSprint>> getAll() {
         try {
-           // logger.trace("Getting all task lists");
-            return new ResponseEntity<List<Lista>>(listaBusiness.getAll(), HttpStatus.OK);
+            logger.info("Obteniendo Todas las tareas");
+            return new ResponseEntity<List<ListaSprint>>(listaBusiness.getAll(), HttpStatus.OK);
         } catch (BusinessException e) {
-            //logger.error("Http status:" + HttpStatus.INTERNAL_SERVER_ERROR + " in getAll()");
-            return new ResponseEntity<List<Lista>>(HttpStatus.INTERNAL_SERVER_ERROR);
+            logger.error("Error al obtener todas las tareas.");
+            return new ResponseEntity<List<ListaSprint>>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
 
-
-
-
     @RequestMapping(value = { "/{id}" }, method = RequestMethod.PUT, produces = "application/json")
-    public ResponseEntity<Lista> update(@PathVariable("id") int id, @RequestBody Lista sprintList) {
+    public ResponseEntity<ListaSprint> update(@PathVariable("id") int id, @RequestBody ListaSprint sprintList) {
         try {
             sprintList.setId(id);
             listaBusiness.update(sprintList);
-            return new ResponseEntity<Lista>(HttpStatus.OK);
+            return new ResponseEntity<ListaSprint>(HttpStatus.OK);
         } catch (BusinessException e) {
-            return new ResponseEntity<Lista>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<ListaSprint>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (NotFoundException e) {
-            return new ResponseEntity<Lista>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<ListaSprint>(HttpStatus.NOT_FOUND);
         }
     }
 

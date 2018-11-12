@@ -4,7 +4,7 @@ import ar.edu.iua.project.parcial.business.IListaBusiness;
 import ar.edu.iua.project.parcial.exceptions.BusinessException;
 import ar.edu.iua.project.parcial.exceptions.ListaNotFoundException;
 import ar.edu.iua.project.parcial.exceptions.NotFoundException;
-import ar.edu.iua.project.parcial.model.Lista;
+import ar.edu.iua.project.parcial.model.ListaSprint;
 import ar.edu.iua.project.parcial.persistence.dao.FactoryDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,9 +18,9 @@ public class ListaBusiness implements IListaBusiness {
     private ListaBusiness listaBusiness;
 
     @Override
-    public Lista getOneId(int id) throws BusinessException, NotFoundException {
+    public ListaSprint getOneId(int id) throws BusinessException, NotFoundException {
         try {
-            Lista l = (Lista) FactoryDAO.getInstance().getListaDAO().getOneId(id);
+            ListaSprint l = (ListaSprint) FactoryDAO.getInstance().getListaDAO().getOneId(id);
             return l;
         } catch (NotFoundException nfe) {
             throw new NotFoundException();
@@ -30,9 +30,9 @@ public class ListaBusiness implements IListaBusiness {
     }
 
     @Override
-    public Lista getOne(String nombre) throws BusinessException, NotFoundException {
+    public ListaSprint getOne(String nombre) throws BusinessException, NotFoundException {
         try {
-            Lista l = (Lista) FactoryDAO.getInstance().getListaDAO().getOne(nombre);
+            ListaSprint l = (ListaSprint) FactoryDAO.getInstance().getListaDAO().getOne(nombre);
             return l;
         } catch (NotFoundException nfe) {
             throw new NotFoundException();
@@ -40,17 +40,17 @@ public class ListaBusiness implements IListaBusiness {
     }
 
     @Override
-    public Lista add(Lista lista) throws BusinessException, NotFoundException, ListaNotFoundException {
+    public ListaSprint add(ListaSprint lista) throws BusinessException, NotFoundException, ListaNotFoundException {
         String nombre = lista.getNombre();
         //(backlog, TO-DO, in progress, waiting, done)
         if(nombre.equalsIgnoreCase("backlog") || nombre.equalsIgnoreCase("todo")
                 || nombre.equalsIgnoreCase("in progress") || nombre.equalsIgnoreCase("waiting")
                 || nombre.equalsIgnoreCase("done")) {
 
-            Lista l = (Lista) FactoryDAO.getInstance().getListaDAO().getOne(nombre);
+            ListaSprint l = (ListaSprint) FactoryDAO.getInstance().getListaDAO().getOne(nombre);
 
             if(l == null) {
-                Lista s = (Lista) FactoryDAO.getInstance().getListaDAO().save(lista);
+                ListaSprint s = (ListaSprint) FactoryDAO.getInstance().getListaDAO().save(lista);
                 return s;
             }else{
                 throw new ListaNotFoundException();
@@ -61,7 +61,7 @@ public class ListaBusiness implements IListaBusiness {
     }
 
     @Override
-    public List<Lista> getAll() throws BusinessException {
+    public List<ListaSprint> getAll() throws BusinessException {
         try{
             return FactoryDAO.getInstance().getListaDAO().getAll();
         }catch (Exception e){
@@ -70,10 +70,17 @@ public class ListaBusiness implements IListaBusiness {
     }
 
     @Override
-    public Lista update(Lista lista) throws BusinessException, NotFoundException {
+    public ListaSprint update(ListaSprint lista) throws BusinessException, NotFoundException {
+
         try {
-            if (getOneId(lista.getId())!=null) {
-                return (Lista) FactoryDAO.getInstance().getListaDAO().update(lista);
+            ListaSprint lUpd = (ListaSprint) FactoryDAO.getInstance().getListaDAO().getOneId(lista.getId());
+            if (lUpd!=null) {
+                if(lUpd.getNombre() != lista.getNombreSprint() && lista.getNombre()!=null){
+                    throw new BusinessException();   //No se puede cambiar el nombre de la lista
+                }else {
+                    lUpd.setNombreSprint(lista.getNombreSprint());
+                    return (ListaSprint) FactoryDAO.getInstance().getListaDAO().update(lUpd);
+                }
             }else{
                 throw new NotFoundException();
             }
