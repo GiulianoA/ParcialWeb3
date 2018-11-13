@@ -78,11 +78,15 @@ public class TareaRESTController {
         try {
             if (buscar.equals("*") || buscar.trim().length() == 0) {
                 log.info("Parametro default, obtengo toda la lista de tareas");
-            	return new ResponseEntity<List<TareaSprint>>(tareaBusiness.getAll(), HttpStatus.OK);
-            } else {
+            	return new ResponseEntity<List<TareaSprint>>(tareaBusiness.order(), HttpStatus.OK);
+            } else if(!buscar.equals("*") && buscar.trim().length() > 0){
                 log.info("Obtengo de la lista lo que coincida con " + buscar );
             	return new ResponseEntity<List<TareaSprint>>(tareaBusiness.search(buscar), HttpStatus.OK);
+            }else{
+                System.out.println("entre");
+                return new ResponseEntity<List<TareaSprint>>(tareaBusiness.order(), HttpStatus.OK);
             }
+
             
         } catch (BusinessException e) {
             return new ResponseEntity<List<TareaSprint>>(HttpStatus.INTERNAL_SERVER_ERROR);

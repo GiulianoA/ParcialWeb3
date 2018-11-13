@@ -11,6 +11,7 @@ import ar.edu.iua.project.parcial.persistence.dao.FactoryDAO;
 import ar.edu.iua.project.parcial.persistence.repository.TareaRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -79,9 +80,10 @@ public class TareaBusiness implements ITareaBusiness {
     }
 
     @Override
-    public List<TareaSprint> order(String estimacion) throws BusinessException {
+    public List<TareaSprint> order() throws BusinessException {
         try {
-            return tareaDAO.findByEstimacionOrderByEstimacionDesc(estimacion);
+            return tareaDAO.findAllByOrderByPrioridadAsc();
+            //return tareaDAO.findAll(new Sort(Sort.Direction.DESC, "<prioridad>"));
         } catch (Exception e) {
             throw new BusinessException(e);
         }

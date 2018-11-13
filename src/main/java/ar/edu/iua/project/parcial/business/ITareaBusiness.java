@@ -14,5 +14,5 @@ public interface ITareaBusiness {
     public void delete(TareaSprint tarea) throws BusinessException, NotFoundException;
     public TareaSprint update(TareaSprint tarea) throws BusinessException, NotFoundException;
     public List<TareaSprint> search(String nombre) throws BusinessException;
-    public List<TareaSprint> order(String estimacion) throws BusinessException;
+    public List<TareaSprint> order() throws BusinessException;
 }
