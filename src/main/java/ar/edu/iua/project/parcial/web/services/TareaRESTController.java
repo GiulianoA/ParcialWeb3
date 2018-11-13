@@ -38,7 +38,7 @@ public class TareaRESTController {
     }
 
     @RequestMapping(value = { "/{nombre}" }, method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<TareaSprint> getTarea(@PathVariable("nombre") String nombre) {
+    public ResponseEntity<TareaSprint> getTareaByNombre(@PathVariable("nombre") String nombre) {
         try {
             log.debug("Get tarea: " + nombre);
             return new ResponseEntity<TareaSprint>(tareaBusiness.getOne(nombre), HttpStatus.OK);
@@ -72,19 +72,21 @@ public class TareaRESTController {
 
 
     @RequestMapping(value = { "", "/" }, method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<List<TareaSprint>> listadoTareaPorNombre(
+    public ResponseEntity<List<TareaSprint>> listadoTarea(
             @RequestParam(required = false, value = "buscar", defaultValue = "*") String buscar,
             @RequestParam(required = false, value = "o", defaultValue = "*") String o){
         try {
-            if (buscar.equals("*") || buscar.trim().length() == 0) {
+            if (buscar.equals("*") && o.equals("*")) {
                 log.info("Parametro default, obtengo toda la lista de tareas");
-            	return new ResponseEntity<List<TareaSprint>>(tareaBusiness.order(), HttpStatus.OK);
-            } else if(!buscar.equals("*") && buscar.trim().length() > 0){
-                log.info("Obtengo de la lista lo que coincida con " + buscar );
+            	return new ResponseEntity<List<TareaSprint>>(tareaBusiness.getAll(), HttpStatus.OK);
+            } else if(!buscar.equals("*") && o.equals("*")){
+                log.info("Obtengo de la lista de tareas lo que coincida con " + buscar );
             	return new ResponseEntity<List<TareaSprint>>(tareaBusiness.search(buscar), HttpStatus.OK);
-            }else{
-                System.out.println("entre");
-                return new ResponseEntity<List<TareaSprint>>(tareaBusiness.order(), HttpStatus.OK);
+            } else if (buscar.equals("*") && !o.equals("*")){
+                log.info("Obtengo de la lista de tareas ordenada " + o );
+                return new ResponseEntity<List<TareaSprint>>(tareaBusiness.order(o), HttpStatus.OK);
+            } else {
+                return null;
             }
 
             

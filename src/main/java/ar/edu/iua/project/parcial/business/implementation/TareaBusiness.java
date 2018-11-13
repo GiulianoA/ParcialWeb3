@@ -80,10 +80,17 @@ public class TareaBusiness implements ITareaBusiness {
     }
 
     @Override
-    public List<TareaSprint> order() throws BusinessException {
+    public List<TareaSprint> order(String o) throws BusinessException {
         try {
-            return tareaDAO.findAllByOrderByPrioridadAsc();
-            //return tareaDAO.findAll(new Sort(Sort.Direction.DESC, "<prioridad>"));
+            if(o.equals("fecha")){
+            return tareaDAO.findAllByOrderByFechacreacionAsc();
+            }else if(o.equals("prioridad")){
+                return tareaDAO.findAllByOrderByPrioridadAsc();
+            }else{
+                throw new BusinessException();
+            }
+
+
         } catch (Exception e) {
             throw new BusinessException(e);
         }

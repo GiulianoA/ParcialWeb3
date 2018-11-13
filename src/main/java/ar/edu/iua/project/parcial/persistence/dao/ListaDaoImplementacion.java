@@ -140,7 +140,6 @@ public class ListaDaoImplementacion implements IGenericDAO<ListaSprint, Serializ
             Root<ListaSprint> from = query.from(ListaSprint.class);
 
             query.select(from);
-            //query.orderBy(builder.asc(x))
 
             List<ListaSprint> listas = session.createQuery(query).getResultList();
 

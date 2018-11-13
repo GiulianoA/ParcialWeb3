@@ -8,6 +8,5 @@ public final class Constantes {
 
     public static final String URL_LISTA=URL_BASE+"/listas";
     public static final String URL_TAREA=URL_BASE+"/tareas";
-    //public static final String URL_ARCHIVOS=URL_BASE+"/archivos";
 
 }

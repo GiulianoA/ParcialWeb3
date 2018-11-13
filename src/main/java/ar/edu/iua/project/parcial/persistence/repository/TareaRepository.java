@@ -8,5 +8,6 @@ import java.util.List;
 public interface TareaRepository extends JpaRepository<TareaSprint, Integer> {
 
     public List<TareaSprint> findByNombreContaining(String nombre);
-    public List<TareaSprint> findAllByOrderByPrioridadAsc();
+   public List<TareaSprint> findAllByOrderByPrioridadAsc();
+   public List<TareaSprint> findAllByOrderByFechacreacionAsc();
 }

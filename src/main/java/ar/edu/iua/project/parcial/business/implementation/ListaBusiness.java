@@ -13,8 +13,6 @@ import java.util.List;
 @Service
 public class ListaBusiness implements IListaBusiness {
 
-    /*@Autowired
-    private ListaBusiness listaBusiness;*/
 
     @Override
     public ListaSprint getOneId(int id) throws BusinessException, NotFoundException {
@@ -44,7 +42,6 @@ public class ListaBusiness implements IListaBusiness {
     @Override
     public ListaSprint add(ListaSprint lista) throws BusinessException, NotFoundException, ListaNotFoundException {
         String nombre = lista.getNombre();
-        //(backlog, TO-DO, in progress, waiting, done)
         if(nombre.equalsIgnoreCase("backlog") || nombre.equalsIgnoreCase("todo")
                 || nombre.equalsIgnoreCase("in progress") || nombre.equalsIgnoreCase("waiting")
                 || nombre.equalsIgnoreCase("done")) {
