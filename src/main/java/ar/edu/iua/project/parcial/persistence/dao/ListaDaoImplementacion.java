@@ -108,20 +108,6 @@ public class ListaDaoImplementacion implements IGenericDAO<ListaSprint, Serializ
 
             List<ListaSprint> listas = session.createQuery(query).getResultList();
 
-            /*
-            List<Tarea> tt = new ArrayList<>();
-            List<Tarea> ta = new ArrayList<>();
-            tt = tareaBusiness.getAll();
-
-            for(Tarea t : tt){
-                if(t.getLista().getId() == listas.get(0).getId()){
-                    ta.add(t);
-                    System.out.println(t.getNombre());
-                }
-            }
-            System.out.println(ta);
-            listas.get(0).setTarea(ta);*/
-
             tx.commit();
             if (listas.isEmpty()) {
                 return null;
@@ -154,6 +140,7 @@ public class ListaDaoImplementacion implements IGenericDAO<ListaSprint, Serializ
             Root<ListaSprint> from = query.from(ListaSprint.class);
 
             query.select(from);
+            //query.orderBy(builder.asc(x))
 
             List<ListaSprint> listas = session.createQuery(query).getResultList();
 

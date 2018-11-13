@@ -20,7 +20,7 @@ public class ListaRESTController {
 
     @Autowired
     private IListaBusiness listaBusiness;
-    final static Logger logger = Logger.getLogger("ListaRESTController.class");
+    final static Logger log = Logger.getLogger("ListaRESTController.class");
 
 
     @RequestMapping(value = { "", "/" }, method = RequestMethod.POST, produces = "application/json")
@@ -29,30 +29,30 @@ public class ListaRESTController {
             ListaSprint l = listaBusiness.add(lista);
             HttpHeaders responseHeaders = new HttpHeaders();
             responseHeaders.set("location", "/listas/" + lista.getId());
-              logger.debug("Agrega la lista: \n" + l);
+              log.info("Agrega la lista: \n" + l);
             return new ResponseEntity<ListaSprint>(l, responseHeaders, HttpStatus.CREATED);
         } catch (ListaNotFoundException iln) {
-             logger.error("Error nombre de lista");
+             log.error("Error nombre de lista");
             return new ResponseEntity<ListaSprint>(HttpStatus.NOT_ACCEPTABLE);
         } catch (BusinessException be) {
-             logger.error("Http status:" + HttpStatus.NOT_FOUND + " en add()");
+             log.error("Http status:" + HttpStatus.NOT_FOUND + " en add()");
             return new ResponseEntity<ListaSprint>(HttpStatus.NOT_FOUND);
         } catch (NotFoundException nfe) {
-              logger.error("Http status:" + HttpStatus.NOT_FOUND + " en add()");
+              log.error("Http status:" + HttpStatus.NOT_FOUND + " en add()");
             return new ResponseEntity<ListaSprint>(HttpStatus.NOT_FOUND);
         }
     }
 
-    @RequestMapping(value = { "/{name}" }, method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<ListaSprint> getListbyName(@PathVariable("name") String name) {
+    @RequestMapping(value = { "/{nombre}" }, method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<ListaSprint> getListbyNombre(@PathVariable("nombre") String nombre) {
         try {
-            logger.debug("Get lista: " + name);
-            return new ResponseEntity<ListaSprint>(listaBusiness.getOne(name), HttpStatus.OK);
+            log.info("Get lista: " + nombre);
+            return new ResponseEntity<ListaSprint>(listaBusiness.getOne(nombre), HttpStatus.OK);
         } catch (BusinessException e) {
-            logger.error("Error id");
+            log.error("Error lista");
             return new ResponseEntity<ListaSprint>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (NotFoundException e) {
-            logger.error("Id no encontrado");
+            log.error("Lista no encontrada");
             return new ResponseEntity<ListaSprint>(HttpStatus.NOT_FOUND);
         }
     }
@@ -60,24 +60,27 @@ public class ListaRESTController {
     @RequestMapping(value = { "", "/" }, method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<List<ListaSprint>> getAll() {
         try {
-            logger.info("Obteniendo Todas las tareas");
+            log.info("Obteniendo Todas las listas");
             return new ResponseEntity<List<ListaSprint>>(listaBusiness.getAll(), HttpStatus.OK);
         } catch (BusinessException e) {
-            logger.error("Error al obtener todas las tareas.");
+            log.error("Error al obtener todas las listas.");
             return new ResponseEntity<List<ListaSprint>>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
 
     @RequestMapping(value = { "/{id}" }, method = RequestMethod.PUT, produces = "application/json")
-    public ResponseEntity<ListaSprint> update(@PathVariable("id") int id, @RequestBody ListaSprint sprintList) {
+    public ResponseEntity<ListaSprint> update(@PathVariable("id") int id, @RequestBody ListaSprint sprintLista) {
         try {
-            sprintList.setId(id);
-            listaBusiness.update(sprintList);
+        	log.info("id a modificar: " + id);
+            sprintLista.setId(id);
+            listaBusiness.update(sprintLista);
             return new ResponseEntity<ListaSprint>(HttpStatus.OK);
         } catch (BusinessException e) {
+        	log.error("Error de id :" +id+ HttpStatus.INTERNAL_SERVER_ERROR);
             return new ResponseEntity<ListaSprint>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (NotFoundException e) {
+        	log.error("id: "+id+" no encontrado " + HttpStatus.NOT_FOUND);
             return new ResponseEntity<ListaSprint>(HttpStatus.NOT_FOUND);
         }
     }

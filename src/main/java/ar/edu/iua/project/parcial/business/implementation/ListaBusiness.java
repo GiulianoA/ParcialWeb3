@@ -6,7 +6,6 @@ import ar.edu.iua.project.parcial.exceptions.ListaNotFoundException;
 import ar.edu.iua.project.parcial.exceptions.NotFoundException;
 import ar.edu.iua.project.parcial.model.ListaSprint;
 import ar.edu.iua.project.parcial.persistence.dao.FactoryDAO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +13,8 @@ import java.util.List;
 @Service
 public class ListaBusiness implements IListaBusiness {
 
-    @Autowired
-    private ListaBusiness listaBusiness;
+    /*@Autowired
+    private ListaBusiness listaBusiness;*/
 
     @Override
     public ListaSprint getOneId(int id) throws BusinessException, NotFoundException {
@@ -33,6 +32,9 @@ public class ListaBusiness implements IListaBusiness {
     public ListaSprint getOne(String nombre) throws BusinessException, NotFoundException {
         try {
             ListaSprint l = (ListaSprint) FactoryDAO.getInstance().getListaDAO().getOne(nombre);
+            if(l == null){
+                throw new NotFoundException();
+            }else
             return l;
         } catch (NotFoundException nfe) {
             throw new NotFoundException();

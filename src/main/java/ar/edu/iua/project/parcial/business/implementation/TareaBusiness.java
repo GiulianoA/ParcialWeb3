@@ -24,14 +24,20 @@ public class TareaBusiness implements ITareaBusiness {
     @Autowired
     private TareaRepository tareaDAO;
 
-    final static Logger logger = Logger.getLogger("TareaBusiness.class");
+    final static Logger log = Logger.getLogger("TareaBusiness.class");
 
     @Override
     public TareaSprint update(TareaSprint tarea) throws BusinessException, NotFoundException {
         Optional<TareaSprint> tar = tareaDAO.findById(tarea.getId());
         ListaSprint lis = (ListaSprint) FactoryDAO.getInstance().getListaDAO().getOneId(tarea.getNombreLista().getId());
+
         if (!tar.isPresent() ) {
             throw new NotFoundException();
+        }else if(!tarea.getPrioridad().equalsIgnoreCase("alta") &&
+                !tarea.getPrioridad().equalsIgnoreCase("baja") &&
+                !tarea.getPrioridad().equalsIgnoreCase("media") ){
+            throw new BusinessException();
+
         }else if(tar.get().getEstimacion() == null && tarea.getEstimacion()==null){
             throw new BusinessException();
         } else if(tar.get().getNombreLista().getNombre().equalsIgnoreCase("done")){  //SI ESTA EN DONE NO SE PEUDE MOVER LOQUITA
@@ -55,7 +61,7 @@ public class TareaBusiness implements ITareaBusiness {
             throw new BusinessException();
         }
         try {
-            logger.info("la tarea "+ tarea.getNombre() + " ha sido movida a " + tarea.getNombreLista());
+            log.info("la tarea "+ tarea.getNombre() + " ha sido movida a " + tarea.getNombreLista());
             return tareaDAO.save(tarea);
         } catch (Exception e) {
             throw new BusinessException(e);

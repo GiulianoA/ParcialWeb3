@@ -20,7 +20,7 @@ public class TareaRESTController {
 
     @Autowired
     private ITareaBusiness tareaBusiness;
-    final static Logger logger = Logger.getLogger("TareaRESTController.class");
+    final static Logger log = Logger.getLogger("TareaRESTController.class");
 
     @RequestMapping(value = {"","/"}, method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<TareaSprint> add(@RequestBody TareaSprint tarea){
@@ -28,25 +28,25 @@ public class TareaRESTController {
             TareaSprint t = tareaBusiness.add(tarea);
             HttpHeaders responseHeaders = new HttpHeaders();
             responseHeaders.set("location", "/tareas/" + tarea.getId());
-            logger.debug("Agrega la tarea: \n" + t);
+            log.debug("Agrega la tarea: \n" + t);
             return new ResponseEntity<TareaSprint>(t, responseHeaders, HttpStatus.CREATED);
         } catch (BusinessException be) {
-            logger.error("Http status:" + HttpStatus.NOT_FOUND + " en add()");
-            return new ResponseEntity<TareaSprint>(HttpStatus.NOT_FOUND);
+            log.error("Http status:" + HttpStatus.INTERNAL_SERVER_ERROR + " en add()");
+            return new ResponseEntity<TareaSprint>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }
 
     @RequestMapping(value = { "/{nombre}" }, method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<TareaSprint> getId(@PathVariable("nombre") String nombre) {
+    public ResponseEntity<TareaSprint> getTarea(@PathVariable("nombre") String nombre) {
         try {
-            logger.debug("Get tarea: " + nombre);
+            log.debug("Get tarea: " + nombre);
             return new ResponseEntity<TareaSprint>(tareaBusiness.getOne(nombre), HttpStatus.OK);
         } catch (BusinessException e) {
-            logger.error("Error nombre");
+            log.error("Error nombre " +nombre);
             return new ResponseEntity<TareaSprint>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (NotFoundException e) {
-            logger.error("Http status:" + HttpStatus.NOT_FOUND + " en getId()");
+            log.error("Http status:" + HttpStatus.NOT_FOUND + " en getId()");
             return new ResponseEntity<TareaSprint>(HttpStatus.NOT_FOUND);
         }
     }
@@ -55,15 +55,16 @@ public class TareaRESTController {
     @RequestMapping(value = { "/{id}" }, method = RequestMethod.PUT, produces = "application/json")
     public ResponseEntity<TareaSprint> update(@PathVariable("id") int id, @RequestBody TareaSprint tarea) {
         try {
+        	log.info("id a modificar: " + id);
             tarea.setId(id);
             tareaBusiness.update(tarea);
-            logger.debug("Actualiza tarea: \n" + tarea);
+            log.debug("Actualiza tarea: \n" + tarea);
             return new ResponseEntity<TareaSprint>(HttpStatus.OK);
         } catch (BusinessException e) {
-            logger.error("Error id");
+        	log.error("Error de id :" +id+ HttpStatus.INTERNAL_SERVER_ERROR);
             return new ResponseEntity<TareaSprint>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (NotFoundException e) {
-            logger.error("Http status:" + HttpStatus.NOT_FOUND + " en update()");
+        	log.error("id: "+id+" no encontrado "+ HttpStatus.NOT_FOUND);
             return new ResponseEntity<TareaSprint>(HttpStatus.NOT_FOUND);
         }
 
@@ -72,13 +73,17 @@ public class TareaRESTController {
 
     @RequestMapping(value = { "", "/" }, method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<List<TareaSprint>> listadoTareaPorNombre(
-            @RequestParam(required = false, value = "q", defaultValue = "*") String q ){
+            @RequestParam(required = false, value = "buscar", defaultValue = "*") String buscar,
+            @RequestParam(required = false, value = "o", defaultValue = "*") String o){
         try {
-            if (q.equals("*") || q.trim().length() == 0) {
-                return new ResponseEntity<List<TareaSprint>>(tareaBusiness.getAll(), HttpStatus.OK);
+            if (buscar.equals("*") || buscar.trim().length() == 0) {
+                log.info("Parametro default, obtengo toda la lista de tareas");
+            	return new ResponseEntity<List<TareaSprint>>(tareaBusiness.getAll(), HttpStatus.OK);
             } else {
-                return new ResponseEntity<List<TareaSprint>>(tareaBusiness.search(q), HttpStatus.OK);
+                log.info("Obtengo de la lista lo que coincida con " + buscar );
+            	return new ResponseEntity<List<TareaSprint>>(tareaBusiness.search(buscar), HttpStatus.OK);
             }
+            
         } catch (BusinessException e) {
             return new ResponseEntity<List<TareaSprint>>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -89,6 +94,7 @@ public class TareaRESTController {
     public ResponseEntity<TareaSprint> delete(@PathVariable("id") int id){
 
         try {
+        	log.info("id a eliminar: " + id);
             TareaSprint st = new TareaSprint();
             if (id!=0) {
                 st.setId(id);
@@ -98,8 +104,10 @@ public class TareaRESTController {
             }
             return new ResponseEntity<TareaSprint>(HttpStatus.OK);
         } catch (BusinessException e) {
+        	log.error("Error de id :" +id+ HttpStatus.INTERNAL_SERVER_ERROR);
             return new ResponseEntity<TareaSprint>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (NotFoundException e) {
+        	log.error("id: "+id+" no encontrado "+ HttpStatus.NOT_FOUND);
             return new ResponseEntity<TareaSprint>(HttpStatus.NOT_FOUND);
         }
     }
