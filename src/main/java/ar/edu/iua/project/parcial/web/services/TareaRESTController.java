@@ -2,8 +2,7 @@ package ar.edu.iua.project.parcial.web.services;
 
 
 import ar.edu.iua.project.parcial.business.ITareaBusiness;
-import ar.edu.iua.project.parcial.exceptions.BusinessException;
-import ar.edu.iua.project.parcial.exceptions.NotFoundException;
+import ar.edu.iua.project.parcial.exceptions.*;
 import ar.edu.iua.project.parcial.model.TareaSprint;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -30,9 +30,18 @@ public class TareaRESTController {
             responseHeaders.set("location", "/tareas/" + tarea.getId());
             log.debug("Agrega la tarea: \n" + t);
             return new ResponseEntity<TareaSprint>(t, responseHeaders, HttpStatus.CREATED);
-        } catch (BusinessException be) {
-            log.error("Http status:" + HttpStatus.INTERNAL_SERVER_ERROR + " en add()");
-            return new ResponseEntity<TareaSprint>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (ListaNotFoundException be) {
+            log.error("La lista backlog no esta creada. Para agregar una tarea necesita crearla.");
+            return new ResponseEntity<TareaSprint>(HttpStatus.NOT_FOUND);
+        }catch (InvalidPrioridadException be) {
+            log.error("La prioridad debe ser alta, media o baja");
+            return new ResponseEntity<TareaSprint>(HttpStatus.NOT_ACCEPTABLE);
+        }catch (TareaExisteException ex){
+            log.error("Ya existe una tarea con el mismo nombre");
+            return new ResponseEntity<TareaSprint>(HttpStatus.NOT_ACCEPTABLE);
+        }catch (FechaCreacionNulaException exe){
+            log.error("La Fecha de creacion no puede ser nula");
+            return new ResponseEntity<TareaSprint>(HttpStatus.NOT_ACCEPTABLE);
         }
 
     }
@@ -41,7 +50,7 @@ public class TareaRESTController {
     public ResponseEntity<TareaSprint> getTareaByNombre(@PathVariable("nombre") String nombre) {
         try {
             log.debug("Get tarea: " + nombre);
-            return new ResponseEntity<TareaSprint>(tareaBusiness.getOne(nombre), HttpStatus.OK);
+            return new ResponseEntity<TareaSprint>(tareaBusiness.getUnaTareaPorNombre(nombre), HttpStatus.OK);
         } catch (BusinessException e) {
             log.error("Error nombre " +nombre);
             return new ResponseEntity<TareaSprint>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -53,22 +62,33 @@ public class TareaRESTController {
 
 
     @RequestMapping(value = { "/{id}" }, method = RequestMethod.PUT, produces = "application/json")
-    public ResponseEntity<TareaSprint> update(@PathVariable("id") int id, @RequestBody TareaSprint tarea) {
+    public ResponseEntity<TareaSprint> update(@PathVariable("id") Integer id, @RequestBody TareaSprint tarea) {
         try {
-        	log.info("id a modificar: " + id);
             tarea.setId(id);
-            tareaBusiness.update(tarea);
-            log.debug("Actualiza tarea: \n" + tarea);
-            return new ResponseEntity<TareaSprint>(HttpStatus.OK);
-        } catch (BusinessException e) {
-        	log.error("Error de id :" +id+ HttpStatus.INTERNAL_SERVER_ERROR);
-            return new ResponseEntity<TareaSprint>(HttpStatus.INTERNAL_SERVER_ERROR);
-        } catch (NotFoundException e) {
-        	log.error("id: "+id+" no encontrado "+ HttpStatus.NOT_FOUND);
-            return new ResponseEntity<TareaSprint>(HttpStatus.NOT_FOUND);
-        }
+            TareaSprint t = tareaBusiness.update(tarea);
+            HttpHeaders responseHeaders = new HttpHeaders();
+            responseHeaders.set("location", "/tareas" + t.getId());
+            log.info("Tarea '" + t.getNombre() + "' con ID "  + t.getId() + " se movio a la lista '" + t.getNombreLista().getNombre() + "'");
+            return new ResponseEntity<TareaSprint>(responseHeaders, HttpStatus.OK);
 
+        } catch (ListaNulaException e) {
+            log.error("TareasRESTController.update() - ListaNulaException ");
+            return new ResponseEntity<TareaSprint>(HttpStatus.NOT_FOUND);
+        } catch (NotFoundException e) {
+            log.error("TareasRESTController.update() - NotFoundException ");
+            return new ResponseEntity<TareaSprint>(HttpStatus.NOT_FOUND);
+        } catch (ValorInvalidoEstimationException e) {
+            log.error("TareasRESTController.update() - IValorInvalidoEstimationException ");
+            return new ResponseEntity<TareaSprint>(HttpStatus.NOT_ACCEPTABLE);
+        } catch (ListaDestinoInvalidaException e) {
+            log.error("TareasRESTController.update() - ListaDestinoInvalidaException");
+            return new ResponseEntity<TareaSprint>(HttpStatus.NOT_ACCEPTABLE);
+        } catch (BusinessException e) {
+            log.error("TareasRESTController.update() - BusinessException ");
+            return new ResponseEntity<TareaSprint>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+
 
 
     @RequestMapping(value = { "", "/" }, method = RequestMethod.GET, produces = "application/json")
@@ -78,7 +98,7 @@ public class TareaRESTController {
         try {
             if (buscar.equals("*") && o.equals("*")) {
                 log.info("Parametro default, obtengo toda la lista de tareas");
-            	return new ResponseEntity<List<TareaSprint>>(tareaBusiness.getAll(), HttpStatus.OK);
+            	return new ResponseEntity<List<TareaSprint>>(tareaBusiness.getAllTareas(), HttpStatus.OK);
             } else if(!buscar.equals("*") && o.equals("*")){
                 log.info("Obtengo de la lista de tareas lo que coincida con " + buscar );
             	return new ResponseEntity<List<TareaSprint>>(tareaBusiness.search(buscar), HttpStatus.OK);
@@ -89,14 +109,33 @@ public class TareaRESTController {
                 return null;
             }
 
-            
+/*
+            if (!buscar.equals("*") && o.equals("*")) {
+                //getByLista
+                //log.info("Tareas de la lista '" + buscar + "' obtenidas");
+                return new ResponseEntity<List<TareaSprint>>(tareaBusiness.getTareasDeUnaLista(buscar), HttpStatus.OK);
+            } else if (buscar.equals("*") && !o.equals("*")) {
+                //getAllSorted
+               // log.info("Todas las tareas obtenidas, ordenadas por '" + o + "'");
+                return new ResponseEntity<List<TareaSprint>>(tareaBusiness.getAllSorted(o), HttpStatus.OK);
+            } else if (!buscar.equals("*") && !o.equals("*")) {
+                //getByListaSorted
+               // log.info("Tareas de la lista '" + buscar + "' obtenidas, ordenadas por '" + o + "'");
+                return new ResponseEntity<List<TareaSprint>>(tareaBusiness.getByListaSorted(buscar, o), HttpStatus.OK);
+            } else {
+                //getAll
+               // log.info("Todas las tareas obtenidas");
+                return new ResponseEntity<List<TareaSprint>>(tareaBusiness.getAll(), HttpStatus.OK);
+            }
+*/
+
         } catch (BusinessException e) {
             return new ResponseEntity<List<TareaSprint>>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
 
-    @RequestMapping(value = { "", "/{id}" }, method = RequestMethod.DELETE, produces = "application/json")
+    @RequestMapping(value = {"/{id}" }, method = RequestMethod.DELETE, produces = "application/json")
     public ResponseEntity<TareaSprint> delete(@PathVariable("id") int id){
 
         try {
@@ -105,15 +144,13 @@ public class TareaRESTController {
             if (id!=0) {
                 st.setId(id);
                 tareaBusiness.delete(st);
-            }else {
-                return new ResponseEntity<TareaSprint>(HttpStatus.NOT_FOUND);
             }
             return new ResponseEntity<TareaSprint>(HttpStatus.OK);
         } catch (BusinessException e) {
         	log.error("Error de id :" +id+ HttpStatus.INTERNAL_SERVER_ERROR);
             return new ResponseEntity<TareaSprint>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (NotFoundException e) {
-        	log.error("id: "+id+" no encontrado "+ HttpStatus.NOT_FOUND);
+        	log.error("id de tarea: "+id+" no encontrado ");
             return new ResponseEntity<TareaSprint>(HttpStatus.NOT_FOUND);
         }
     }

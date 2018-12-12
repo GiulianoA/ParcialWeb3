@@ -1,73 +1,110 @@
 package ar.edu.iua.project.parcial.business.implementation;
 
 import ar.edu.iua.project.parcial.business.ITareaBusiness;
-import ar.edu.iua.project.parcial.exceptions.BusinessException;
-import ar.edu.iua.project.parcial.exceptions.InvalidPrioridadException;
-import ar.edu.iua.project.parcial.exceptions.ListaNotFoundException;
-import ar.edu.iua.project.parcial.exceptions.NotFoundException;
+import ar.edu.iua.project.parcial.exceptions.*;
 import ar.edu.iua.project.parcial.model.ListaSprint;
 import ar.edu.iua.project.parcial.model.TareaSprint;
-import ar.edu.iua.project.parcial.persistence.dao.FactoryDAO;
-import ar.edu.iua.project.parcial.persistence.repository.TareaRepository;
+import ar.edu.iua.project.parcial.repository.ListaRepository;
+import ar.edu.iua.project.parcial.repository.TareaRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import javax.persistence.EntityNotFoundException;
+import java.util.*;
 
 @Service
 public class TareaBusiness implements ITareaBusiness {
 
-
+    TareaSprint t;
 
     @Autowired
     private TareaRepository tareaDAO;
 
+    @Autowired
+    private ListaRepository listaDAO;
+
+    ListaBusiness lb = new ListaBusiness();
+
     final static Logger log = Logger.getLogger("TareaBusiness.class");
 
     @Override
-    public TareaSprint update(TareaSprint tarea) throws BusinessException, NotFoundException {
+    public TareaSprint update(TareaSprint tarea) throws BusinessException, NotFoundException, ListaNulaException, ValorInvalidoEstimationException, ListaDestinoInvalidaException {
+
+        Optional<TareaSprint> tareaOrigen = null;
+        String listaDestino = null;
+
+        //TareaSprint bus = (TareaSprint) tareaDAO.findAllByIdContaining(tarea.getId());
+
+       // if(bus == null){
+        //    throw new NotFoundException();
+        //}
+
+        //List<TareaSprint>
+
         Optional<TareaSprint> tar = tareaDAO.findById(tarea.getId());
-        ListaSprint lis = (ListaSprint) FactoryDAO.getInstance().getListaDAO().getOneId(tarea.getNombreLista().getId());
-
-        if (!tar.isPresent() ) {
+        if (!tar.isPresent()){
+            System.out.println("EASDSADSADAADADDAADADADADDA");
             throw new NotFoundException();
-        }else if(!tarea.getPrioridad().equalsIgnoreCase("alta") &&
-                !tarea.getPrioridad().equalsIgnoreCase("baja") &&
-                !tarea.getPrioridad().equalsIgnoreCase("media") ){
-            throw new BusinessException();
-
-        }else if(tar.get().getEstimacion() == null && tarea.getEstimacion()==null){
-            throw new BusinessException();
-        } else if(tar.get().getNombreLista().getNombre().equalsIgnoreCase("done")){  //SI ESTA EN DONE NO SE PEUDE MOVER LOQUITA
-            throw new BusinessException();
-        }else if(tar.get().getNombreLista().getNombre().equalsIgnoreCase("todo") &&   //si la lista esta en tudo y se quiere ir a otro lado que no sea
-                !lis.getNombre().equalsIgnoreCase("in progress")&&              // in progress y waiting se queda.
-                !lis.getNombre().equalsIgnoreCase("waiting")){
-            throw new BusinessException();
-        }else if(tar.get().getNombreLista().getNombre().equalsIgnoreCase("backlog") &&     //si esta en backlog, solo se puede ir a todo
-                !lis.getNombre().equalsIgnoreCase("todo")){
-            throw new BusinessException();
-        }else if(tar.get().getNombreLista().getNombre().equalsIgnoreCase("in progress") &&
-                !lis.getNombre().equalsIgnoreCase("todo")&&
-                !lis.getNombre().equalsIgnoreCase("waiting")&&
-                !lis.getNombre().equalsIgnoreCase("done")){
-            throw new BusinessException();
-        }else if(tar.get().getNombreLista().getNombre().equalsIgnoreCase("waiting") &&
-                !lis.getNombre().equalsIgnoreCase("todo")&&
-                !lis.getNombre().equalsIgnoreCase("in progress")&&
-                !lis.getNombre().equalsIgnoreCase("done")){
-            throw new BusinessException();
         }
+
+
         try {
-            log.info("la tarea "+ tarea.getNombre() + " ha sido movida a " + tarea.getNombreLista());
-            return tareaDAO.save(tarea);
-        } catch (Exception e) {
+            listaDestino = listaDAO.getOne(tarea.getNombreLista().getId()).getNombre().toLowerCase();
+            System.out.println("1111111111");
+        } catch (EntityNotFoundException e){
+            throw new NotFoundException();
+        } catch (NullPointerException e){
+        throw new ListaNulaException();
+    }
+
+        try {
+            System.out.println("22222222222222222");
+            tareaOrigen = findById(tarea.getId());
+        } catch (NotFoundException e) {
+            throw new NotFoundException(e);
+        } catch (BusinessException e) {
             throw new BusinessException(e);
         }
 
+
+        if (tareaOrigen.get().getEstimacion() <= 0){
+            System.out.println("33333333333");
+            throw new ValorInvalidoEstimationException();
+        }
+
+        String listaOrigen = tareaOrigen.get().getNombreLista().getNombre().toLowerCase();
+
+        HashMap<String, String[]> origenDestino = new HashMap<String, String[]>();
+        origenDestino.put("backlog", new String[]{"todo"});
+        origenDestino.put("todo", new String[]{"in progress", "waiting", "done"});
+        origenDestino.put("in progress", new String[]{"waiting", "todo", "done"});
+        origenDestino.put("waiting", new String[]{"in progress", "todo", "done"});
+        origenDestino.put("done", new String[]{});
+
+        if (!Arrays.asList(origenDestino.get(listaOrigen)).contains(listaDestino)){
+            System.out.println("444444444444");
+            throw new ListaDestinoInvalidaException();
+        }
+
+        return tareaDAO.save(tarea);
+
+    }
+
+    public Optional<TareaSprint> findById(Integer id) throws BusinessException, NotFoundException {
+        try {
+            return tareaDAO.findById(id);
+        } catch (Exception e) {
+            throw new BusinessException(e);
+        }
+    }
+
+    @Override
+    public List<TareaSprint> getTareasDeUnaLista() {
+    //public List<TareaSprint> getTareasDeUnaLista(String buscar) {
+
+
+        return tareaDAO.findAllByOrderByFechacreacion();
     }
 
     @Override
@@ -97,17 +134,12 @@ public class TareaBusiness implements ITareaBusiness {
     }
 
     @Override
-    public TareaSprint getOne(String nombre) throws BusinessException, NotFoundException {
-        List<TareaSprint> tareaS = tareaDAO.findAll();
+    public TareaSprint getUnaTareaPorNombre(String nombre) throws BusinessException, NotFoundException {
 
-        TareaSprint tarea = null;
+        TareaSprint tarea = tareaDAO.getOneTareaByNombre(nombre);
 
-        for (TareaSprint tar : tareaS) {
-            if (tar.getNombre().equalsIgnoreCase(nombre)) {
-                tarea = tar;
-            }
-        }
         if (tarea==null) {
+
             throw new NotFoundException();
         }
         try {
@@ -118,7 +150,7 @@ public class TareaBusiness implements ITareaBusiness {
     }
 
     @Override
-    public List<TareaSprint> getAll() throws BusinessException {
+    public List<TareaSprint> getAllTareas() throws BusinessException {
         try {
             return tareaDAO.findAll();
         } catch (Exception e) {
@@ -127,31 +159,41 @@ public class TareaBusiness implements ITareaBusiness {
     }
 
     @Override
-    public TareaSprint add(TareaSprint tarea) throws BusinessException {
-        try {
-            ListaSprint lista = (ListaSprint) FactoryDAO.getInstance().getListaDAO().getOne("backlog");
-            
-            if(tarea.getPrioridad().equalsIgnoreCase("alta")) { 
-            	tarea.setPrioridad("alta");
-            }else if(tarea.getPrioridad().equalsIgnoreCase("media")){
-            	tarea.setPrioridad("media");
-            }else if(tarea.getPrioridad().equalsIgnoreCase("baja")) {
-            	tarea.setPrioridad("baja");
-            }else {
-            	throw new InvalidPrioridadException();
-            }
-            
-            if (lista!=null) {
-                tarea.setNombreLista(lista);             	
-                	return tareaDAO.save(tarea);
-                
-            }else {
-                throw new ListaNotFoundException();
-            }
+    public TareaSprint add(TareaSprint tarea) throws FechaCreacionNulaException,ListaNotFoundException,InvalidPrioridadException,TareaExisteException {
 
-        } catch (Exception e) {
-            throw new BusinessException(e);
-        }
+
+            TareaSprint tareaEnbdd = tareaDAO.getOneTareaByNombre(tarea.getNombre());
+            if(tareaEnbdd!=null){
+                System.out.println("ya hay una tearea");
+                throw new TareaExisteException();
+            }else {
+
+
+                ListaSprint lista = listaDAO.getOneListaByNombre("backlog");
+
+                if (tarea.getPrioridad().equalsIgnoreCase("alta")) {
+                    tarea.setPrioridad("alta");
+                } else if (tarea.getPrioridad().equalsIgnoreCase("media")) {
+                    tarea.setPrioridad("media");
+                } else if (tarea.getPrioridad().equalsIgnoreCase("baja")) {
+                    tarea.setPrioridad("baja");
+                }else {
+                    throw new InvalidPrioridadException();
+                }
+
+                if(tarea.getFechacreacion()==null){
+                    throw new FechaCreacionNulaException();
+                }
+
+
+                if (lista != null) {
+                    tarea.setNombreLista(lista);         //quiere decir que la lista backlog esta creada
+                    return tareaDAO.save(tarea);
+
+                } else {
+                    throw new ListaNotFoundException();
+                }
+            }
     }
 
     @Override

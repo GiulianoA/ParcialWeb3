@@ -30,10 +30,10 @@ public class ParcialApplicationTests {
 	@Test
 	public void getListaByNombre() throws BusinessException, NotFoundException {
 		ListaBusiness lb = new ListaBusiness();
-		String nombre = "backlog";
-		ListaSprint ls = lb.getOne(nombre);
+		String nombre = "todo";
+		ListaSprint ls = lb.getUnaListaPorNombre(nombre);
 
-		assertEquals("backlog" , ls.getNombre());
+		assertEquals("todo" , ls.getNombre());
 
 	}
 
@@ -41,7 +41,7 @@ public class ParcialApplicationTests {
 	public void getListaById() throws BusinessException, NotFoundException {
 		ListaBusiness lb = new ListaBusiness();
 		int id = 1;
-		ListaSprint ls = lb.getOneId(id);
+		ListaSprint ls = lb.getOneListaById(id);
 
 		assertEquals(1,ls.getId(),ls.getId());
 	}

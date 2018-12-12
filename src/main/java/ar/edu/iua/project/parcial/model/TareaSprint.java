@@ -11,6 +11,9 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.Comparator;
+import java.util.Date;
+
 
 @Entity
 @Table(name = "tarea_sprint")
@@ -25,9 +28,9 @@ public class TareaSprint {
     private String nombre;
     
     @Column(name = "fechacreacion")
-    private String fechacreacion;
+    private Date fechacreacion;
     @Column(name = "fechamodificacion")
-    private String fechamodificacion;
+    private Date fechamodificacion;
     @Column(name = "prioridad")
     private String prioridad;
 
@@ -41,8 +44,8 @@ public class TareaSprint {
 
    
 
-    public TareaSprint(Integer id, String nombre, String fechacreacion, String fechamodificacion, String prioridad,
-			ListaSprint nombreLista, Integer estimacion) {
+    public TareaSprint(Integer id, String nombre, Date fechacreacion, Date fechamodificacion, String prioridad,
+					   ListaSprint nombreLista, Integer estimacion) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -91,28 +94,28 @@ public class TareaSprint {
 
 
 
-	public String getFechacreacion() {
+	public Date getFechacreacion() {
 		return fechacreacion;
 	}
 
 
 
 
-	public void setFechacreacion(String fechacreacion) {
+	public void setFechacreacion(Date fechacreacion) {
 		this.fechacreacion = fechacreacion;
 	}
 
 
 
 
-	public String getFechamodificacion() {
+	public Date getFechamodificacion() {
 		return fechamodificacion;
 	}
 
 
 
 
-	public void setFechamodificacion(String fechamodificacion) {
+	public void setFechamodificacion(Date fechamodificacion) {
 		this.fechamodificacion = fechamodificacion;
 	}
 
@@ -160,4 +163,6 @@ public class TareaSprint {
 
 
 
+
 }
+
