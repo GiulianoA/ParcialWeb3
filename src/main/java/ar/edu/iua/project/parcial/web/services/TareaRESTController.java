@@ -94,8 +94,8 @@ public class TareaRESTController {
     @RequestMapping(value = { "", "/" }, method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<List<TareaSprint>> listadoTarea(
             @RequestParam(required = false, value = "buscar", defaultValue = "*") String buscar,
-            @RequestParam(required = false, value = "o", defaultValue = "*") String o){
-       // try {
+            @RequestParam(required = false, value = "o", defaultValue = "*") String o) {
+        // try {
             /*if (buscar.equals("*") && o.equals("*")) {
                 log.info("Parametro default, obtengo toda la lista de tareas");
             	return new ResponseEntity<List<TareaSprint>>(tareaBusiness.getAllTareas(), HttpStatus.OK);
@@ -109,14 +109,26 @@ public class TareaRESTController {
                 return null;
             }*/
 
-            return new ResponseEntity<List<TareaSprint>>(tareaBusiness.getByLista(buscar), HttpStatus.OK);
+        return new ResponseEntity<List<TareaSprint>>(tareaBusiness.getByLista(buscar), HttpStatus.OK);
 
        /* } catch (BusinessException e) {
             return new ResponseEntity<List<TareaSprint>>(HttpStatus.INTERNAL_SERVER_ERROR);
         }*/
-    //}
     }
 
+/*
+    @RequestMapping(value = { "", "/" }, method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<List<TareaSprint>> getListadoTarea(){
+         try {
+             return new ResponseEntity<List<TareaSprint>>(tareaBusiness.getAllTareas(), HttpStatus.OK);
+
+
+
+         } catch (BusinessException e) {
+            return new ResponseEntity<List<TareaSprint>>(HttpStatus.INTERNAL_SERVER_ERROR);
+         }
+    }
+*/
 
     @RequestMapping(value = {"/{id}" }, method = RequestMethod.DELETE, produces = "application/json")
     public ResponseEntity<TareaSprint> delete(@PathVariable("id") int id){

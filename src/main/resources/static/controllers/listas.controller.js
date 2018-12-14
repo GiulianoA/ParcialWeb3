@@ -3,7 +3,6 @@ angular.module('iw3')
         $scope.titulo="Listas";
         $scope.listas=[];	//Array
         $scope.tareas=[];
-        //$scope.tareas={};	//Diccionario
         $scope.instanciaL={};
         $scope.instanciaT={};
         $scope.instanciaM=false;
@@ -41,7 +40,7 @@ angular.module('iw3')
         };
 
         $scope.deleteListaController=function(id){
-            if(!confirm("Desea eliminar la lista seleccionada?"))
+            if(!confirm("Desea eliminar la lista seleccionada y todas sus tareas?"))
                 return;
             listasService.delete(id).then(
                 function(resp){
@@ -64,6 +63,23 @@ angular.module('iw3')
                 },
                 function (err) {
                 }
+            );
+        };
+
+        $scope.deleteTareaController=function(id){
+            if(!confirm("Desea eliminar la tarea seleccionada?"))
+                return;
+            tareasService.delete(id).then(
+                function(resp){
+                    if(resp.status==200) {
+                        $scope.tareas.forEach(function(o,i){
+                            if(o.id==id) {
+                                $scope.tareas.splice(i,1);
+                            }
+                        });
+                    }
+                },
+                function(err){}
             );
         };
 

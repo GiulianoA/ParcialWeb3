@@ -34,13 +34,6 @@ public class TareaBusiness implements ITareaBusiness {
         Optional<TareaSprint> tareaOrigen = null;
         String listaDestino = null;
 
-        //TareaSprint bus = (TareaSprint) tareaDAO.findAllByIdContaining(tarea.getId());
-
-       // if(bus == null){
-        //    throw new NotFoundException();
-        //}
-
-        //List<TareaSprint>
 
         Optional<TareaSprint> tar = tareaDAO.findById(tarea.getId());
         if (!tar.isPresent()){
@@ -218,21 +211,6 @@ public class TareaBusiness implements ITareaBusiness {
 
     @Override
     public List<TareaSprint> getByLista(String nombreLista){
-        /*System.out.println("aca se rompe");
-        int id;
-        List<ListaSprint> listas = listaDAO.findAll();
-
-        for(ListaSprint l : listas){
-            if(l.getNombre()==nombreLista){
-                id=l.getId();
-                break;
-            }
-        }
-
-
-
-        //List<TareaSprint> tareasOrdenadas = tareaDAO.findAllByNombreListaOrderByFechacreacion(nombreLista);
-        return tareaDAO.findAllByNombreListaOrderByFechacreacion(nombreLista);*/
         return tareaDAO.getAllByNombreListaOrderByFechacreacion(listaDAO.getOneListaByNombre(nombreLista));
     }
 

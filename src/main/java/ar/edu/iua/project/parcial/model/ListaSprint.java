@@ -95,15 +95,4 @@ public class ListaSprint {
 	}
 
 
-	/*@Override
-	public String toString() {
-		return this.nombre;
-	}*/
-
-	public int compareTo(ListaSprint listaSprint){
-		if(this.nombre.equals(listaSprint.nombre))
-			return 0;
-		else
-			return -1;
-	}
 }

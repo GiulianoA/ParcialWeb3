@@ -30,9 +30,11 @@
     </ul>
 
     <div class="panel-heading">Tareas</div>
+
         <ul>
             <li ng-repeat="t in tareas">
                 {{t.nombre}} - {{t.fechacreacion}} - {{t.fechamodificacion}} - {{t.prioridad}} - {{t.estimacion}}
-                <i ng-click="deleteListaController(p.id)" class="fas fa-trash-alt"></i>
+                <i ng-click="deleteTareaController(t.id)" class="fas fa-trash-alt"></i>
             </li>
         </ul>
+

@@ -10,6 +10,9 @@ angular.module('iw3')
             },
             delete : function(id){
                 return $http.delete(URL_API_BASE+"tareas/"+id);
+            },
+            mod : function(id){
+                return $http.delete(URL_API_BASE+"tareas/"+id);
             }
         }
 
