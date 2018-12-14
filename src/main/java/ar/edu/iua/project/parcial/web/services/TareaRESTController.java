@@ -46,7 +46,7 @@ public class TareaRESTController {
 
     }
 
-    @RequestMapping(value = { "/{nombre}" }, method = RequestMethod.GET, produces = "application/json")
+    /*@RequestMapping(value = { "/{nombre}" }, method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<TareaSprint> getTareaByNombre(@PathVariable("nombre") String nombre) {
         try {
             log.debug("Get tarea: " + nombre);
@@ -58,7 +58,7 @@ public class TareaRESTController {
             log.error("Http status:" + HttpStatus.NOT_FOUND + " en getId()");
             return new ResponseEntity<TareaSprint>(HttpStatus.NOT_FOUND);
         }
-    }
+    }*/
 
 
     @RequestMapping(value = { "/{id}" }, method = RequestMethod.PUT, produces = "application/json")
@@ -95,8 +95,8 @@ public class TareaRESTController {
     public ResponseEntity<List<TareaSprint>> listadoTarea(
             @RequestParam(required = false, value = "buscar", defaultValue = "*") String buscar,
             @RequestParam(required = false, value = "o", defaultValue = "*") String o){
-        try {
-            if (buscar.equals("*") && o.equals("*")) {
+       // try {
+            /*if (buscar.equals("*") && o.equals("*")) {
                 log.info("Parametro default, obtengo toda la lista de tareas");
             	return new ResponseEntity<List<TareaSprint>>(tareaBusiness.getAllTareas(), HttpStatus.OK);
             } else if(!buscar.equals("*") && o.equals("*")){
@@ -107,31 +107,14 @@ public class TareaRESTController {
                 return new ResponseEntity<List<TareaSprint>>(tareaBusiness.order(o), HttpStatus.OK);
             } else {
                 return null;
-            }
+            }*/
 
-/*
-            if (!buscar.equals("*") && o.equals("*")) {
-                //getByLista
-                //log.info("Tareas de la lista '" + buscar + "' obtenidas");
-                return new ResponseEntity<List<TareaSprint>>(tareaBusiness.getTareasDeUnaLista(buscar), HttpStatus.OK);
-            } else if (buscar.equals("*") && !o.equals("*")) {
-                //getAllSorted
-               // log.info("Todas las tareas obtenidas, ordenadas por '" + o + "'");
-                return new ResponseEntity<List<TareaSprint>>(tareaBusiness.getAllSorted(o), HttpStatus.OK);
-            } else if (!buscar.equals("*") && !o.equals("*")) {
-                //getByListaSorted
-               // log.info("Tareas de la lista '" + buscar + "' obtenidas, ordenadas por '" + o + "'");
-                return new ResponseEntity<List<TareaSprint>>(tareaBusiness.getByListaSorted(buscar, o), HttpStatus.OK);
-            } else {
-                //getAll
-               // log.info("Todas las tareas obtenidas");
-                return new ResponseEntity<List<TareaSprint>>(tareaBusiness.getAll(), HttpStatus.OK);
-            }
-*/
+            return new ResponseEntity<List<TareaSprint>>(tareaBusiness.getByLista(buscar), HttpStatus.OK);
 
-        } catch (BusinessException e) {
+       /* } catch (BusinessException e) {
             return new ResponseEntity<List<TareaSprint>>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        }*/
+    //}
     }
 
 

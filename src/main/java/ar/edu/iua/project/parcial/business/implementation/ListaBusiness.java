@@ -64,7 +64,6 @@ public class ListaBusiness implements IListaBusiness {
     }
 
 
-
         @Override
         public ListaSprint getOneListaById(int id) throws BusinessException, NotFoundException {
         ListaSprint l = null;

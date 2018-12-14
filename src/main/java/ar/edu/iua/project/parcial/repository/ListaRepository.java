@@ -12,5 +12,4 @@ public interface ListaRepository extends JpaRepository<ListaSprint, Integer> {
 
     public ListaSprint findByIdContains(int id);
     public ListaSprint getOneListaByNombre(String nombre);
-
 }

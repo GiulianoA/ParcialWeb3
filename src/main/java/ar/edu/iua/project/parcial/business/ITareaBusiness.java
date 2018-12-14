@@ -16,8 +16,9 @@ public interface ITareaBusiness {
     public TareaSprint update(TareaSprint tarea) throws BusinessException, NotFoundException,ListaNulaException, ValorInvalidoEstimationException, ListaDestinoInvalidaException;
     public List<TareaSprint> search(String nombre) throws BusinessException;
     public List<TareaSprint> order(String o) throws BusinessException;
-
-
+   // public List<TareaSprint> getTareasOrdenadas(String nombreLista, String porQue);
+    public List<TareaSprint> getEstimacion(Integer estimacion);
+    public List<TareaSprint> getByLista(String nombreLista);
     public Optional<TareaSprint> findById(Integer id) throws BusinessException, NotFoundException;
 
     //List<TareaSprint> getTareasDeUnaLista(String buscar);

@@ -197,6 +197,46 @@ public class TareaBusiness implements ITareaBusiness {
     }
 
     @Override
+    public List<TareaSprint> getEstimacion(Integer estimacion){
+        /*System.out.println("aca se rompe");
+        int id;
+        List<ListaSprint> listas = listaDAO.findAll();
+
+        for(ListaSprint l : listas){
+            if(l.getNombre()==nombreLista){
+                id=l.getId();
+                break;
+            }
+        }
+
+
+
+        //List<TareaSprint> tareasOrdenadas = tareaDAO.findAllByNombreListaOrderByFechacreacion(nombreLista);
+        return tareaDAO.findAllByNombreListaOrderByFechacreacion(nombreLista);*/
+        return tareaDAO.getAllByEstimacion(estimacion);
+    }
+
+    @Override
+    public List<TareaSprint> getByLista(String nombreLista){
+        /*System.out.println("aca se rompe");
+        int id;
+        List<ListaSprint> listas = listaDAO.findAll();
+
+        for(ListaSprint l : listas){
+            if(l.getNombre()==nombreLista){
+                id=l.getId();
+                break;
+            }
+        }
+
+
+
+        //List<TareaSprint> tareasOrdenadas = tareaDAO.findAllByNombreListaOrderByFechacreacion(nombreLista);
+        return tareaDAO.findAllByNombreListaOrderByFechacreacion(nombreLista);*/
+        return tareaDAO.getAllByNombreListaOrderByFechacreacion(listaDAO.getOneListaByNombre(nombreLista));
+    }
+
+    @Override
     public void delete(TareaSprint tarea) throws BusinessException, NotFoundException {
         try {
             if(tarea.getId()!=null) {

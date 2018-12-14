@@ -1,0 +1,38 @@
+<button class="btn btn-success" ng-click="relocate('/')">Volver</button>
+<i ng-click="refresh()" class="fas fa-sync-alt"></i>
+
+<div class="panel-body">
+    Nombre de Lista: <input type="text" ng-model="instanciaL.nombre"/><br/>
+    Nombre de sprint: <input type="text" ng-model="instanciaL.nombreSprint"/><br/>
+</div>
+<div class="panel-footer">
+    <button class="btn btn-primary" ng-click="addListaController()">Guardar</button>
+</div>
+
+<div class="panel-body">
+    Nombre de Tarea: <input type="text" ng-model="instanciaT.nombre"/><br/>
+    Fecha Creacion: <input type="text" ng-model="instanciaT.fechacreacion"/><br/>
+    Fecha Modificacion: <input type="text" ng-model="instanciaT.fechamodificacion"/><br/>
+    Prioridad: <input type="text" ng-model="instanciaT.prioridad"/><br/>
+    Estimacion: <input type="number" ng-model="instanciaT.estimacion"/><br/>
+
+</div>
+<div class="panel-footer">
+    <button class="btn btn-primary" ng-click="addTareaController()">Guardar</button>
+</div>
+
+    <div class="panel-heading">Listas</div>
+    <ul>
+        <li ng-repeat="p in listas">
+            {{p.nombre}} - {{p.nombreSprint}}
+            <i ng-click="deleteListaController(p.id)" class="fas fa-trash-alt"></i>
+        </li>
+    </ul>
+
+    <div class="panel-heading">Tareas</div>
+        <ul>
+            <li ng-repeat="t in tareas">
+                {{t.nombre}} - {{t.fechacreacion}} - {{t.fechamodificacion}} - {{t.prioridad}} - {{t.estimacion}}
+                <i ng-click="deleteListaController(p.id)" class="fas fa-trash-alt"></i>
+            </li>
+        </ul>

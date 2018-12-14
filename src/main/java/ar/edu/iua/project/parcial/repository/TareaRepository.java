@@ -1,5 +1,6 @@
 package ar.edu.iua.project.parcial.repository;
 
+import ar.edu.iua.project.parcial.model.ListaSprint;
 import ar.edu.iua.project.parcial.model.TareaSprint;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -14,6 +15,8 @@ public interface TareaRepository extends JpaRepository<TareaSprint, Integer> {
     //public List<TareaSprint> findAllByNombreListaOrderByFechacreacionDesc();
     public List<TareaSprint> findAllByOrderByFechacreacion();
     TareaSprint findAllByIdContaining(Integer id);
-
+    //List<TareaSprint> findAllByNombreListaOrderByFechacreacion(String nombreLista);
+    List<TareaSprint> getAllByEstimacion(Integer estimacion);
+    List<TareaSprint> getAllByNombreListaOrderByFechacreacion(ListaSprint lista);
 
 }
