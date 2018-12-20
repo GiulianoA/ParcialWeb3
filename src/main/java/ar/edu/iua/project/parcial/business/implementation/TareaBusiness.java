@@ -18,6 +18,7 @@ public class TareaBusiness implements ITareaBusiness {
 
     TareaSprint t;
 
+    
     @Autowired
     private TareaRepository tareaDAO;
 
@@ -29,7 +30,7 @@ public class TareaBusiness implements ITareaBusiness {
     final static Logger log = Logger.getLogger("TareaBusiness.class");
 
     @Override
-    public TareaSprint update(TareaSprint tarea) throws BusinessException, NotFoundException, ListaNulaException, ValorInvalidoEstimationException, ListaDestinoInvalidaException {
+    public TareaSprint update(TareaSprint tarea, boolean isAdmin) throws BusinessException, NotFoundException, ListaNulaException, ValorInvalidoEstimationException, ListaDestinoInvalidaException {
 
         Optional<TareaSprint> tareaOrigen = null;
         String listaDestino = null;
@@ -37,14 +38,12 @@ public class TareaBusiness implements ITareaBusiness {
 
         Optional<TareaSprint> tar = tareaDAO.findById(tarea.getId());
         if (!tar.isPresent()){
-            System.out.println("EASDSADSADAADADDAADADADADDA");
             throw new NotFoundException();
         }
 
 
         try {
             listaDestino = listaDAO.getOne(tarea.getNombreLista().getId()).getNombre().toLowerCase();
-            System.out.println("1111111111");
         } catch (EntityNotFoundException e){
             throw new NotFoundException();
         } catch (NullPointerException e){
@@ -52,7 +51,6 @@ public class TareaBusiness implements ITareaBusiness {
     }
 
         try {
-            System.out.println("22222222222222222");
             tareaOrigen = findById(tarea.getId());
         } catch (NotFoundException e) {
             throw new NotFoundException(e);
@@ -61,22 +59,25 @@ public class TareaBusiness implements ITareaBusiness {
         }
 
 
-        if (tareaOrigen.get().getEstimacion() <= 0){
-            System.out.println("33333333333");
-            throw new ValorInvalidoEstimationException();
-        }
+       // if (tareaOrigen.get().getEstimacion() <= 0){
+       //     throw new ValorInvalidoEstimationException();
+       // }
 
         String listaOrigen = tareaOrigen.get().getNombreLista().getNombre().toLowerCase();
 
         HashMap<String, String[]> origenDestino = new HashMap<String, String[]>();
-        origenDestino.put("backlog", new String[]{"todo"});
+        System.out.println("isAdmin: " + isAdmin);
+        if (isAdmin) {
+            origenDestino.put("backlog", new String[]{"todo"});
+        } else {
+            origenDestino.put("backlog", new String[]{});
+        }
         origenDestino.put("todo", new String[]{"in progress", "waiting", "done"});
         origenDestino.put("in progress", new String[]{"waiting", "todo", "done"});
         origenDestino.put("waiting", new String[]{"in progress", "todo", "done"});
         origenDestino.put("done", new String[]{});
 
         if (!Arrays.asList(origenDestino.get(listaOrigen)).contains(listaDestino)){
-            System.out.println("444444444444");
             throw new ListaDestinoInvalidaException();
         }
 
@@ -94,7 +95,6 @@ public class TareaBusiness implements ITareaBusiness {
 
     @Override
     public List<TareaSprint> getTareasDeUnaLista() {
-    //public List<TareaSprint> getTareasDeUnaLista(String buscar) {
 
 
         return tareaDAO.findAllByOrderByFechacreacion();
@@ -210,10 +210,33 @@ public class TareaBusiness implements ITareaBusiness {
     }
 
     @Override
-    public List<TareaSprint> getByLista(String nombreLista){
+    public List<TareaSprint> getByListaYFechaCreacion(String nombreLista){	
         return tareaDAO.getAllByNombreListaOrderByFechacreacion(listaDAO.getOneListaByNombre(nombreLista));
     }
 
+    @Override
+    public List<TareaSprint> getByListaYOrdenacion( String nombreLista, String tipoOrden) throws NotFoundException, InvalidSortException{	
+
+    	
+    	if(tipoOrden.equalsIgnoreCase("fecha")){
+    		return tareaDAO.getAllByNombreListaOrderByFechacreacion(listaDAO.getOneListaByNombre(nombreLista));
+        }else if(tipoOrden.equalsIgnoreCase("prioridad")){
+        	return tareaDAO.getAllByNombreListaOrderByPrioridad(listaDAO.getOneListaByNombre(nombreLista));
+        }else if (tipoOrden.equals("*") && !nombreLista.equals("*")){
+        	if(tareaDAO.getAllByNombreLista(listaDAO.getOneListaByNombre(nombreLista)).size()==0) {
+        		//throw new NotFoundException(); //NO HAY TAREAS EN ESA LISTA
+        		List<TareaSprint> l = new ArrayList<TareaSprint>();
+        		return l;
+        	}else {
+        	return tareaDAO.getAllByNombreLista(listaDAO.getOneListaByNombre(nombreLista));
+        	}
+        }else if(tipoOrden.equals("*") && nombreLista.equals("*")){
+        	return tareaDAO.findAll();
+        }else {
+        	throw new InvalidSortException();
+        } 	 	
+    }
+    
     @Override
     public void delete(TareaSprint tarea) throws BusinessException, NotFoundException {
         try {

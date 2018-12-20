@@ -11,8 +11,14 @@ angular.module('iw3')
             delete : function(id){
                 return $http.delete(URL_API_BASE+"tareas/"+id);
             },
-            mod : function(id){
-                return $http.delete(URL_API_BASE+"tareas/"+id);
+            mov : function(id,tarea){
+                return $http.put(URL_API_BASE+"tareas/"+id,tarea);
+            },
+            listTareasByLista : function(nombreLista){
+            	return $http.get(URL_API_BASE + "tareas/?buscar="+nombreLista);
+            },
+            tareasByListaSort: function(nombreLista,sort){
+            	return $http.get(URL_API_BASE + "tareas/?buscar="+nombreLista+"&ordenar="+sort);
             }
         }
 

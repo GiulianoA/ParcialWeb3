@@ -18,5 +18,8 @@ public interface TareaRepository extends JpaRepository<TareaSprint, Integer> {
     //List<TareaSprint> findAllByNombreListaOrderByFechacreacion(String nombreLista);
     List<TareaSprint> getAllByEstimacion(Integer estimacion);
     List<TareaSprint> getAllByNombreListaOrderByFechacreacion(ListaSprint lista);
+    List<TareaSprint> getAllByNombreListaOrderByPrioridad(ListaSprint lista);
+    List<TareaSprint> getAllByNombreLista(ListaSprint lista);
+    
 
 }

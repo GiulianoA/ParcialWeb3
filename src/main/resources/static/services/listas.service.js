@@ -10,6 +10,9 @@ angular.module('iw3')
             },
             delete : function(id){
                 return $http.delete(URL_API_BASE+"listas/"+id);
+            },
+            listTareas : function(lista){
+            	return $http.get(URL_API_BASE+"listas/"+lista)
             }
         };
     });

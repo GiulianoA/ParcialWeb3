@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import javax.servlet.http.HttpServletRequest;
 
 import java.util.Date;
 import java.util.List;
@@ -28,7 +30,6 @@ public class TareaRESTController {
             TareaSprint t = tareaBusiness.add(tarea);
             HttpHeaders responseHeaders = new HttpHeaders();
             responseHeaders.set("location", "/tareas/" + tarea.getId());
-            log.debug("Agrega la tarea: \n" + t);
             return new ResponseEntity<TareaSprint>(t, responseHeaders, HttpStatus.CREATED);
         } catch (ListaNotFoundException be) {
             log.error("La lista backlog no esta creada. Para agregar una tarea necesita crearla.");
@@ -46,7 +47,7 @@ public class TareaRESTController {
 
     }
 
-    /*@RequestMapping(value = { "/{nombre}" }, method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = { "/{nombre}" }, method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<TareaSprint> getTareaByNombre(@PathVariable("nombre") String nombre) {
         try {
             log.debug("Get tarea: " + nombre);
@@ -55,20 +56,35 @@ public class TareaRESTController {
             log.error("Error nombre " +nombre);
             return new ResponseEntity<TareaSprint>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (NotFoundException e) {
-            log.error("Http status:" + HttpStatus.NOT_FOUND + " en getId()");
+            log.error("NO SE ENCONTRO UNA TAREA CON ESE NOMBRE");
             return new ResponseEntity<TareaSprint>(HttpStatus.NOT_FOUND);
         }
-    }*/
+    }
+
+    @RequestMapping(value = { "", "/" }, method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<List<TareaSprint>> listadoTarea(
+            @RequestParam(required = false, value = "buscar", defaultValue = "*") String buscar,
+            @RequestParam(required = false, value = "ordenar", defaultValue = "*") String orden) {
+        try {
+			return new ResponseEntity<List<TareaSprint>>(tareaBusiness.getByListaYOrdenacion(buscar, orden), HttpStatus.OK);
+		} catch (InvalidSortException e) {
+            log.error("TareasRESTController.listadoTareas() - Incorrecta la busqueda ");
+            return new ResponseEntity<List<TareaSprint>>(HttpStatus.NOT_ACCEPTABLE);
+		}catch (NotFoundException e) {
+            log.error("TareasRESTController.listadoTareas() - NO SE ENCONTRO LA LISTA/ NO HAY TAREAS EN ESA LISTA ");
+            return new ResponseEntity<List<TareaSprint>>(HttpStatus.NOT_FOUND);
+		}
+
+    }
 
 
     @RequestMapping(value = { "/{id}" }, method = RequestMethod.PUT, produces = "application/json")
-    public ResponseEntity<TareaSprint> update(@PathVariable("id") Integer id, @RequestBody TareaSprint tarea) {
+    public ResponseEntity<TareaSprint> update(@PathVariable("id") Integer id, @RequestBody TareaSprint tarea, HttpServletRequest request) {
         try {
             tarea.setId(id);
-            TareaSprint t = tareaBusiness.update(tarea);
+            TareaSprint t = tareaBusiness.update(tarea, request.isUserInRole("ROLE_LIDER"));
             HttpHeaders responseHeaders = new HttpHeaders();
             responseHeaders.set("location", "/tareas" + t.getId());
-            log.info("Tarea '" + t.getNombre() + "' con ID "  + t.getId() + " se movio a la lista '" + t.getNombreLista().getNombre() + "'");
             return new ResponseEntity<TareaSprint>(responseHeaders, HttpStatus.OK);
 
         } catch (ListaNulaException e) {
@@ -90,47 +106,8 @@ public class TareaRESTController {
     }
 
 
-
-    @RequestMapping(value = { "", "/" }, method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<List<TareaSprint>> listadoTarea(
-            @RequestParam(required = false, value = "buscar", defaultValue = "*") String buscar,
-            @RequestParam(required = false, value = "o", defaultValue = "*") String o) {
-        // try {
-            /*if (buscar.equals("*") && o.equals("*")) {
-                log.info("Parametro default, obtengo toda la lista de tareas");
-            	return new ResponseEntity<List<TareaSprint>>(tareaBusiness.getAllTareas(), HttpStatus.OK);
-            } else if(!buscar.equals("*") && o.equals("*")){
-                log.info("Obtengo de la lista de tareas lo que coincida con " + buscar );
-            	return new ResponseEntity<List<TareaSprint>>(tareaBusiness.search(buscar), HttpStatus.OK);
-            } else if (buscar.equals("*") && !o.equals("*")){
-                log.info("Obtengo de la lista de tareas ordenada " + o );
-                return new ResponseEntity<List<TareaSprint>>(tareaBusiness.order(o), HttpStatus.OK);
-            } else {
-                return null;
-            }*/
-
-        return new ResponseEntity<List<TareaSprint>>(tareaBusiness.getByLista(buscar), HttpStatus.OK);
-
-       /* } catch (BusinessException e) {
-            return new ResponseEntity<List<TareaSprint>>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }*/
-    }
-
-/*
-    @RequestMapping(value = { "", "/" }, method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<List<TareaSprint>> getListadoTarea(){
-         try {
-             return new ResponseEntity<List<TareaSprint>>(tareaBusiness.getAllTareas(), HttpStatus.OK);
-
-
-
-         } catch (BusinessException e) {
-            return new ResponseEntity<List<TareaSprint>>(HttpStatus.INTERNAL_SERVER_ERROR);
-         }
-    }
-*/
-
     @RequestMapping(value = {"/{id}" }, method = RequestMethod.DELETE, produces = "application/json")
+    @PreAuthorize("hasRole('ROLE_LIDER')")
     public ResponseEntity<TareaSprint> delete(@PathVariable("id") int id){
 
         try {

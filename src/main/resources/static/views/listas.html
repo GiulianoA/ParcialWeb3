@@ -1,40 +1,162 @@
-<button class="btn btn-success" ng-click="relocate('/')">Volver</button>
-<i ng-click="refresh()" class="fas fa-sync-alt"></i>
+<style>
+	table, th, td {
+		border: 1px solid grey;
+		border-collapse: collapse;
+		padding: 5px;
+	}
 
-<div class="panel-body">
-    Nombre de Lista: <input type="text" ng-model="instanciaL.nombre"/><br/>
-    Nombre de sprint: <input type="text" ng-model="instanciaL.nombreSprint"/><br/>
+	table tr:nth-child(odd) {
+		background-color: #f2f2f2;
+	}
+
+	table tr:nth-child(even) {
+		background-color: #ffffff;
+	}
+</style>
+
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item active" aria-current="page"><h4>Menu </h4></li>
+		<button class="btn btn-primary" ng-click="mostrarDivLista()">Agregar Lista</button>
+		<button class="btn btn-primary" ng-click="mostrarDivTarea()">Agregar Tarea</button>
+		<button class="btn btn-success" ng-click="relocate('/')">Volver</button>
+		<i ng-click="refresh()" class="fas fa-sync-alt"></i>
+		<form class="nav pull-right navbar-nav">
+			<span> {{user.roles[0]}} </span>
+			<span ng-show="autenticado"><strong><i class="fas fa-user-ninja"></i>{{user.name}}</strong>
+				<span class="pointer" ng-click="logout(true);"> ( Logout )</span>
+			</span>
+		</form>
+	</ol>
+</nav>
+
+<div class="panel-body-default" ng-show="mostrarAgregarLista">
+	<ul>
+		<table border="1px solid" >
+			<tbody>
+				<tr>
+					<td>Nombre de Lista</td>
+					<td><input id="nombre" type="text" ng-model="instanciaL.nombre"/><br /></td>
+				</tr>
+				<tr>
+					<td>Nombre de Sprint</td>
+					<td><input id="nombreSprint" type="text" ng-model="instanciaL.nombreSprint" /><br /></td>
+				</tr>
+			</tbody>
+		</table>
+	</ul>
+	<div class="panel-footer">
+		<button ng-disabled="!mostrarBotonGuardarLista()" class="btn btn-success" ng-click="addListaController()">Guardar</button>
+	</div>
 </div>
-<div class="panel-footer">
-    <button class="btn btn-primary" ng-click="addListaController()">Guardar</button>
+
+
+<div class="panel-body-default" ng-show="mostrarAgregarTarea">
+	<ul>
+		<table border="1px solid" >
+			<tbody>
+			<tr>
+				<td>Nombre de Tarea</td>
+				<td><input id="nombre" type="text" ng-model="instanciaT.nombre" placeholder="Tarea1"/><br /></td>
+			</tr>
+			<tr>
+				<td>Fecha Creacion</td>
+				<td><input type="date" id="fechacreacion" ng-model="instanciaT.fechacreacion" min="2018-12-10" max="2020-12-10" required placeholder="yyyy-MM-dd" /><br /></td>
+			</tr>
+			<tr>
+				<td>Fecha Modificacion</td>
+				<td><input type="date" id="fechamodificacion" ng-model="instanciaT.fechamodificacion" min="2018-12-10" max="2020-12-10" required placeholder="yyyy-MM-dd" /><br /></td>
+			</tr>
+			<tr>
+				<td>Prioridad</td>
+				<td><input id="prioridad" type="text" ng-model="instanciaT.prioridad" placeholder="alta-media-baja"/><br/></td>
+			</tr>
+			<tr>
+				<td>Estimacion</td>
+				<td><input id="estimacion" type="number" ng-model="instanciaT.estimacion" min="0" required placeholder="1,2,3" /><br/></td>
+			</tr>
+			</tbody>
+		</table>
+	</ul>
+	<div class="panel-footer">
+		<button ng-disabled="!mostrarBotonGuardarTarea()" class="btn btn-success" ng-click="addTareaController()">Guardar</button>
+	</div>
 </div>
 
-<div class="panel-body">
-    Nombre de Tarea: <input type="text" ng-model="instanciaT.nombre"/><br/>
-    Fecha Creacion: <input type="text" ng-model="instanciaT.fechacreacion"/><br/>
-    Fecha Modificacion: <input type="text" ng-model="instanciaT.fechamodificacion"/><br/>
-    Prioridad: <input type="text" ng-model="instanciaT.prioridad"/><br/>
-    Estimacion: <input type="number" ng-model="instanciaT.estimacion"/><br/>
+<div class="container-fluid">
+	<div class="row">
 
+		<div ng-show="mostrarDIVENTERO"> <!--ng-show="mostrar"-->
+
+			<ul class="col-xs-4">
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item active" aria-current="page"><h4>Listas</h4></li>
+					</ol>
+				</nav>
+				<table border="1px solid">
+					<thead>
+					<tr>
+						<th align="center">Nombre</th>
+						<th align="center">Sprint</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr ng-repeat="p in listas">
+						<td align="center">{{ p.nombre }}</td>
+						<td align="center">{{ p.nombreSprint }}</td>
+						<td align="center"> <button class="btn btn-success" ng-click="verTareas(p.nombre)">Ver Tareas</button> </td>
+						<td align="center"> <i	ng-click="deleteListaController(p.id)" class="fas fa-trash-alt"></i></td>
+					</tr>
+					</tbody>
+				</table>
+			</ul>
+
+
+
+			<ul class="col-xs-8">
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item active" aria-current="page"><h4>Tareas</h4></li>
+					</ol>
+				</nav>
+				<table border="1px solid" >
+					<thead>
+					<tr>
+						<th>Nombre</th>
+						<th><button ng-click="sortBy(nombrelista,'fecha')">Fecha de creacion</button> <span ng-show="propertyName === 'Fecha de creacion'"></span></th>
+						<th>Fecha de Modificacion</th>
+						<th><button ng-click="sortBy(nombrelista,'prioridad')">Prioridad</button> <span ng-show="propertyName === 'Prioridad'"></span></th>
+						<th>Estimacion</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr ng-repeat="t in listaConTareas[nombrelista]">
+						<td align="center">{{ t.nombre }}</td>
+						<td align="center">{{t.fechacreacion|date: "dd/MM/yyyy"}}</td>
+						<td align="center">{{ t.fechamodificacion|date: "dd/MM/yyyy"}}</td>
+						<td align="center">{{ t.prioridad }}</td>
+						<td align="center">{{ t.estimacion }}</td>
+						<td>
+							<div class="dropdown">
+								<button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown">Mover
+									<span class="caret"></span></button>
+								<div class="dropdown-menu">
+									<div ng-repeat="l in listas">
+										<a class="dropdown-item" ng-click="moverTareaController(t,l.nombre)">{{l.nombre}}</a>
+									</div>
+								</div>
+							</div>
+
+						</td>
+						<!--<td align="center"> <button class="btn btn-primary" ng-click="moverTareaController(t.id)">Mover</button> </td>-->
+						<td align="center"> <i	ng-click="deleteTareaController(t.id,nombrelista)" class="fas fa-trash-alt"></i> </td>
+
+					</tr>
+					</tbody>
+				</table>
+			</ul>
+		</div>
+
+	</div>
 </div>
-<div class="panel-footer">
-    <button class="btn btn-primary" ng-click="addTareaController()">Guardar</button>
-</div>
-
-    <div class="panel-heading">Listas</div>
-    <ul>
-        <li ng-repeat="p in listas">
-            {{p.nombre}} - {{p.nombreSprint}}
-            <i ng-click="deleteListaController(p.id)" class="fas fa-trash-alt"></i>
-        </li>
-    </ul>
-
-    <div class="panel-heading">Tareas</div>
-
-        <ul>
-            <li ng-repeat="t in tareas">
-                {{t.nombre}} - {{t.fechacreacion}} - {{t.fechamodificacion}} - {{t.prioridad}} - {{t.estimacion}}
-                <i ng-click="deleteTareaController(t.id)" class="fas fa-trash-alt"></i>
-            </li>
-        </ul>
-

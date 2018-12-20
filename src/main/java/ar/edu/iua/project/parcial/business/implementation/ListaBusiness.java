@@ -22,16 +22,14 @@ public class ListaBusiness implements IListaBusiness {
 
     @Override
     public ListaSprint getUnaListaPorNombre(String nombre) throws  NotFoundException {
-        try {
+ 
             ListaSprint lista = listaDAO.getOneListaByNombre(nombre);
 
             if(lista == null){
                 throw new NotFoundException();
             }else
                 return lista;
-        } catch (NotFoundException nfe) {
-            throw new NotFoundException();
-        }
+       
     }
 
     @Override
