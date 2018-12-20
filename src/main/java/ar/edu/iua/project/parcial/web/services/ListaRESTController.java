@@ -27,7 +27,6 @@ public class ListaRESTController {
             ListaSprint l = listaBusiness.add(lista);
             HttpHeaders responseHeaders = new HttpHeaders();
             responseHeaders.set("location", "/listas/" + lista.getId());
-              log.info("Agrega la lista: \n" + l);
             return new ResponseEntity<ListaSprint>(l, responseHeaders, HttpStatus.CREATED);
         } catch (ListaYaExisteException iln) {
              log.error("Ya existe la lista que deseas agregar :" + lista.getNombre());
@@ -41,7 +40,6 @@ public class ListaRESTController {
     @RequestMapping(value = { "/{nombre}" }, method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<ListaSprint> getListbyNombre(@PathVariable("nombre") String nombre) {
         try {
-            log.info("Get lista: " + nombre);
             return new ResponseEntity<ListaSprint>(listaBusiness.getUnaListaPorNombre(nombre), HttpStatus.OK);
         } catch (NotFoundException e) {
             log.error("Lista no encontrada Method: getListaByNombre "+ nombre);
@@ -52,7 +50,6 @@ public class ListaRESTController {
     @RequestMapping(value = { "", "/" }, method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<List<ListaSprint>> getAll() {
         try {
-            log.info("Obteniendo Todas las listas");
             return new ResponseEntity<List<ListaSprint>>(listaBusiness.getAll(), HttpStatus.OK);
         } catch (BusinessException e) {
             log.error("Error al obtener todas las listas.");

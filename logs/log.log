@@ -128,3 +128,344 @@
 20-12-2018 01:18:50.136 a.e.i.p.parcial.ParcialApplication.$M  No active profile set, falling back to default profiles: default
 20-12-2018 01:18:54.748 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.$M  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
 20-12-2018 01:18:56.088 a.e.i.p.parcial.ParcialApplication.$M  Started ParcialApplication in 6.477 seconds (JVM running for 7.186)
+20-12-2018 01:26:09.636 a.e.i.p.parcial.ParcialApplication.$M  Starting ParcialApplication on giuliano-Aspire-E5-571 with PID 23632 (/home/giuliano/eclipse-workspace/ParcialWeb3-master/target/classes started by giuliano in /home/giuliano/eclipse-workspace/ParcialWeb3-master)
+20-12-2018 01:26:09.637 a.e.i.p.parcial.ParcialApplication.$M  Running with Spring Boot v2.0.6.RELEASE, Spring v5.0.10.RELEASE
+20-12-2018 01:26:09.640 a.e.i.p.parcial.ParcialApplication.$M  No active profile set, falling back to default profiles: default
+20-12-2018 01:26:14.443 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.$M  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+20-12-2018 01:26:15.857 a.e.i.p.parcial.ParcialApplication.$M  Started ParcialApplication in 6.614 seconds (JVM running for 7.308)
+20-12-2018 01:31:13.447 a.e.i.p.parcial.ParcialApplication.$M  Starting ParcialApplication on giuliano-Aspire-E5-571 with PID 23997 (/home/giuliano/eclipse-workspace/ParcialWeb3-master/target/classes started by giuliano in /home/giuliano/eclipse-workspace/ParcialWeb3-master)
+20-12-2018 01:31:13.448 a.e.i.p.parcial.ParcialApplication.$M  Running with Spring Boot v2.0.6.RELEASE, Spring v5.0.10.RELEASE
+20-12-2018 01:31:13.450 a.e.i.p.parcial.ParcialApplication.$M  No active profile set, falling back to default profiles: default
+20-12-2018 01:31:18.649 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.$M  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+20-12-2018 01:31:20.186 a.e.i.p.parcial.ParcialApplication.$M  Started ParcialApplication in 7.222 seconds (JVM running for 7.926)
+20-12-2018 01:32:26.013 a.e.i.p.parcial.ParcialApplication.$M  Starting ParcialApplication on giuliano-Aspire-E5-571 with PID 24159 (/home/giuliano/eclipse-workspace/ParcialWeb3-master/target/classes started by giuliano in /home/giuliano/eclipse-workspace/ParcialWeb3-master)
+20-12-2018 01:32:26.014 a.e.i.p.parcial.ParcialApplication.$M  Running with Spring Boot v2.0.6.RELEASE, Spring v5.0.10.RELEASE
+20-12-2018 01:32:26.021 a.e.i.p.parcial.ParcialApplication.$M  No active profile set, falling back to default profiles: default
+20-12-2018 01:32:30.966 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.$M  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+20-12-2018 01:32:32.670 a.e.i.p.parcial.ParcialApplication.$M  Started ParcialApplication in 7.184 seconds (JVM running for 7.911)
+20-12-2018 01:33:03.823 o.a.c.c.C.[.[.[.[dispatcherServlet].$M  Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.lang.NullPointerException] with root cause
+java.lang.NullPointerException: null
+	at ar.edu.iua.project.parcial.business.implementation.TareaBusiness.add(TareaBusiness.java:167)
+	at ar.edu.iua.project.parcial.web.services.TareaRESTController.add(TareaRESTController.java:30)
+	at ar.edu.iua.project.parcial.web.services.TareaRESTController$$FastClassBySpringCGLIB$$215d235a.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:684)
+	at ar.edu.iua.project.parcial.web.services.TareaRESTController$$EnhancerBySpringCGLIB$$aefd166f.add(<generated>)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:209)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:136)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:102)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:891)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:797)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:991)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:925)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:974)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:877)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:661)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:851)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:742)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.boot.actuate.web.trace.servlet.HttpTraceFilter.doFilterInternal(HttpTraceFilter.java:90)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:320)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:127)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:91)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:137)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:111)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:170)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:200)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:66)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:105)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:56)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:215)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:178)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:357)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:270)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.HttpPutFormContentFilter.doFilterInternal(HttpPutFormContentFilter.java:109)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.filterAndRecordMetrics(WebMvcMetricsFilter.java:155)
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.filterAndRecordMetrics(WebMvcMetricsFilter.java:123)
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:108)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:200)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:198)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:493)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:140)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:81)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:800)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:806)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1498)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:748)
+20-12-2018 01:33:30.658 a.e.i.p.parcial.ParcialApplication.$M  Starting ParcialApplication on giuliano-Aspire-E5-571 with PID 24343 (/home/giuliano/eclipse-workspace/ParcialWeb3-master/target/classes started by giuliano in /home/giuliano/eclipse-workspace/ParcialWeb3-master)
+20-12-2018 01:33:30.659 a.e.i.p.parcial.ParcialApplication.$M  Running with Spring Boot v2.0.6.RELEASE, Spring v5.0.10.RELEASE
+20-12-2018 01:33:30.661 a.e.i.p.parcial.ParcialApplication.$M  No active profile set, falling back to default profiles: default
+20-12-2018 01:33:35.222 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.$M  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+20-12-2018 01:33:36.698 a.e.i.p.parcial.ParcialApplication.$M  Started ParcialApplication in 6.53 seconds (JVM running for 7.219)
+20-12-2018 01:34:20.364 o.a.c.c.C.[.[.[.[dispatcherServlet].$M  Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.lang.NullPointerException] with root cause
+java.lang.NullPointerException: null
+	at ar.edu.iua.project.parcial.business.implementation.TareaBusiness.add(TareaBusiness.java:167)
+	at ar.edu.iua.project.parcial.web.services.TareaRESTController.add(TareaRESTController.java:30)
+	at ar.edu.iua.project.parcial.web.services.TareaRESTController$$FastClassBySpringCGLIB$$215d235a.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:684)
+	at ar.edu.iua.project.parcial.web.services.TareaRESTController$$EnhancerBySpringCGLIB$$19703d4c.add(<generated>)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:209)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:136)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:102)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:891)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:797)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:991)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:925)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:974)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:877)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:661)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:851)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:742)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.boot.actuate.web.trace.servlet.HttpTraceFilter.doFilterInternal(HttpTraceFilter.java:90)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:320)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:127)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:91)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:137)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:111)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:170)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:200)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:66)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:105)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:56)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:215)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:178)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:357)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:270)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.HttpPutFormContentFilter.doFilterInternal(HttpPutFormContentFilter.java:109)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.filterAndRecordMetrics(WebMvcMetricsFilter.java:155)
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.filterAndRecordMetrics(WebMvcMetricsFilter.java:123)
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:108)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:200)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:198)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:493)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:140)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:81)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:800)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:806)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1498)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:748)
+20-12-2018 01:34:53.222 a.e.i.p.parcial.ParcialApplication.$M  Starting ParcialApplication on giuliano-Aspire-E5-571 with PID 24537 (/home/giuliano/eclipse-workspace/ParcialWeb3-master/target/classes started by giuliano in /home/giuliano/eclipse-workspace/ParcialWeb3-master)
+20-12-2018 01:34:53.223 a.e.i.p.parcial.ParcialApplication.$M  Running with Spring Boot v2.0.6.RELEASE, Spring v5.0.10.RELEASE
+20-12-2018 01:34:53.225 a.e.i.p.parcial.ParcialApplication.$M  No active profile set, falling back to default profiles: default
+20-12-2018 01:34:58.151 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.$M  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+20-12-2018 01:34:59.567 a.e.i.p.parcial.ParcialApplication.$M  Started ParcialApplication in 6.767 seconds (JVM running for 7.464)
+20-12-2018 01:38:54.769 a.e.i.p.parcial.ParcialApplication.$M  Starting ParcialApplication on giuliano-Aspire-E5-571 with PID 24825 (/home/giuliano/eclipse-workspace/ParcialWeb3-master/target/classes started by giuliano in /home/giuliano/eclipse-workspace/ParcialWeb3-master)
+20-12-2018 01:38:54.770 a.e.i.p.parcial.ParcialApplication.$M  Running with Spring Boot v2.0.6.RELEASE, Spring v5.0.10.RELEASE
+20-12-2018 01:38:54.776 a.e.i.p.parcial.ParcialApplication.$M  No active profile set, falling back to default profiles: default
+20-12-2018 01:39:00.205 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.$M  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+20-12-2018 01:39:01.564 a.e.i.p.parcial.ParcialApplication.$M  Started ParcialApplication in 7.292 seconds (JVM running for 8.116)
+20-12-2018 09:53:27.328 a.e.i.p.parcial.ParcialApplication.$M  Starting ParcialApplication on giuliano-Aspire-E5-571 with PID 2674 (/home/giuliano/eclipse-workspace/ParcialWeb3-master/target/classes started by giuliano in /home/giuliano/eclipse-workspace/ParcialWeb3-master)
+20-12-2018 09:53:27.330 a.e.i.p.parcial.ParcialApplication.$M  Running with Spring Boot v2.0.6.RELEASE, Spring v5.0.10.RELEASE
+20-12-2018 09:53:27.333 a.e.i.p.parcial.ParcialApplication.$M  No active profile set, falling back to default profiles: default
+20-12-2018 09:53:32.740 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.$M  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+20-12-2018 09:53:34.337 a.e.i.p.parcial.ParcialApplication.$M  Started ParcialApplication in 7.981 seconds (JVM running for 9.518)
+20-12-2018 09:54:51.146 a.e.i.p.parcial.ParcialApplication.$M  Starting ParcialApplication on giuliano-Aspire-E5-571 with PID 3066 (/home/giuliano/eclipse-workspace/ParcialWeb3-master/target/classes started by giuliano in /home/giuliano/eclipse-workspace/ParcialWeb3-master)
+20-12-2018 09:54:51.147 a.e.i.p.parcial.ParcialApplication.$M  Running with Spring Boot v2.0.6.RELEASE, Spring v5.0.10.RELEASE
+20-12-2018 09:54:51.150 a.e.i.p.parcial.ParcialApplication.$M  No active profile set, falling back to default profiles: default
+20-12-2018 09:54:56.814 a.e.i.p.parcial.ParcialApplication.$M  Starting ParcialApplication on giuliano-Aspire-E5-571 with PID 3133 (/home/giuliano/eclipse-workspace/ParcialWeb3-master/target/classes started by giuliano in /home/giuliano/eclipse-workspace/ParcialWeb3-master)
+20-12-2018 09:54:56.815 a.e.i.p.parcial.ParcialApplication.$M  Running with Spring Boot v2.0.6.RELEASE, Spring v5.0.10.RELEASE
+20-12-2018 09:54:56.820 a.e.i.p.parcial.ParcialApplication.$M  No active profile set, falling back to default profiles: default
+20-12-2018 09:55:02.099 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.$M  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+20-12-2018 09:55:03.617 a.e.i.p.parcial.ParcialApplication.$M  Started ParcialApplication in 7.508 seconds (JVM running for 8.933)
+20-12-2018 09:58:20.948 a.e.i.p.parcial.ParcialApplication.$M  Starting ParcialApplication on giuliano-Aspire-E5-571 with PID 3357 (/home/giuliano/eclipse-workspace/ParcialWeb3-master/target/classes started by giuliano in /home/giuliano/eclipse-workspace/ParcialWeb3-master)
+20-12-2018 09:58:20.956 a.e.i.p.parcial.ParcialApplication.$M  Running with Spring Boot v2.0.6.RELEASE, Spring v5.0.10.RELEASE
+20-12-2018 09:58:20.959 a.e.i.p.parcial.ParcialApplication.$M  No active profile set, falling back to default profiles: default
+20-12-2018 09:58:26.059 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.$M  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+20-12-2018 09:58:27.878 a.e.i.p.parcial.ParcialApplication.$M  Started ParcialApplication in 7.466 seconds (JVM running for 8.26)
+20-12-2018 10:00:49.471 a.e.i.p.parcial.ParcialApplication.$M  Starting ParcialApplication on giuliano-Aspire-E5-571 with PID 3570 (/home/giuliano/eclipse-workspace/ParcialWeb3-master/target/classes started by giuliano in /home/giuliano/eclipse-workspace/ParcialWeb3-master)
+20-12-2018 10:00:49.472 a.e.i.p.parcial.ParcialApplication.$M  Running with Spring Boot v2.0.6.RELEASE, Spring v5.0.10.RELEASE
+20-12-2018 10:00:49.474 a.e.i.p.parcial.ParcialApplication.$M  No active profile set, falling back to default profiles: default
+20-12-2018 10:00:58.799 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.$M  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+20-12-2018 10:01:01.773 a.e.i.p.parcial.ParcialApplication.$M  Started ParcialApplication in 12.96 seconds (JVM running for 13.93)
+20-12-2018 10:01:25.191 a.e.i.p.parcial.ParcialApplication.$M  Starting ParcialApplication on giuliano-Aspire-E5-571 with PID 3751 (/home/giuliano/eclipse-workspace/ParcialWeb3-master/target/classes started by giuliano in /home/giuliano/eclipse-workspace/ParcialWeb3-master)
+20-12-2018 10:01:25.192 a.e.i.p.parcial.ParcialApplication.$M  Running with Spring Boot v2.0.6.RELEASE, Spring v5.0.10.RELEASE
+20-12-2018 10:01:25.197 a.e.i.p.parcial.ParcialApplication.$M  No active profile set, falling back to default profiles: default
+20-12-2018 10:01:30.623 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.$M  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+20-12-2018 10:01:32.166 a.e.i.p.parcial.ParcialApplication.$M  Started ParcialApplication in 7.478 seconds (JVM running for 8.636)
+20-12-2018 10:10:29.734 a.e.i.p.parcial.ParcialApplication.$M  Starting ParcialApplication on giuliano-Aspire-E5-571 with PID 4236 (/home/giuliano/eclipse-workspace/ParcialWeb3-master/target/classes started by giuliano in /home/giuliano/eclipse-workspace/ParcialWeb3-master)
+20-12-2018 10:10:29.735 a.e.i.p.parcial.ParcialApplication.$M  Running with Spring Boot v2.0.6.RELEASE, Spring v5.0.10.RELEASE
+20-12-2018 10:10:29.738 a.e.i.p.parcial.ParcialApplication.$M  No active profile set, falling back to default profiles: default
+20-12-2018 10:10:35.201 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.$M  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+20-12-2018 10:10:36.782 a.e.i.p.parcial.ParcialApplication.$M  Started ParcialApplication in 7.544 seconds (JVM running for 8.514)
+20-12-2018 10:11:30.127 a.e.i.p.parcial.ParcialApplication.$M  Starting ParcialApplication on giuliano-Aspire-E5-571 with PID 4421 (/home/giuliano/eclipse-workspace/ParcialWeb3-master/target/classes started by giuliano in /home/giuliano/eclipse-workspace/ParcialWeb3-master)
+20-12-2018 10:11:30.128 a.e.i.p.parcial.ParcialApplication.$M  Running with Spring Boot v2.0.6.RELEASE, Spring v5.0.10.RELEASE
+20-12-2018 10:11:30.134 a.e.i.p.parcial.ParcialApplication.$M  No active profile set, falling back to default profiles: default
+20-12-2018 10:11:35.307 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.$M  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+20-12-2018 10:11:36.873 a.e.i.p.parcial.ParcialApplication.$M  Started ParcialApplication in 7.208 seconds (JVM running for 8.19)
+20-12-2018 10:14:10.382 a.e.i.p.parcial.ParcialApplication.$M  Starting ParcialApplication on giuliano-Aspire-E5-571 with PID 4595 (/home/giuliano/eclipse-workspace/ParcialWeb3-master/target/classes started by giuliano in /home/giuliano/eclipse-workspace/ParcialWeb3-master)
+20-12-2018 10:14:10.383 a.e.i.p.parcial.ParcialApplication.$M  Running with Spring Boot v2.0.6.RELEASE, Spring v5.0.10.RELEASE
+20-12-2018 10:14:10.397 a.e.i.p.parcial.ParcialApplication.$M  No active profile set, falling back to default profiles: default
+20-12-2018 10:14:15.562 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.$M  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+20-12-2018 10:14:17.163 a.e.i.p.parcial.ParcialApplication.$M  Started ParcialApplication in 7.278 seconds (JVM running for 8.065)
+20-12-2018 10:15:57.389 a.e.i.p.parcial.ParcialApplication.$M  Starting ParcialApplication on giuliano-Aspire-E5-571 with PID 4796 (/home/giuliano/eclipse-workspace/ParcialWeb3-master/target/classes started by giuliano in /home/giuliano/eclipse-workspace/ParcialWeb3-master)
+20-12-2018 10:15:57.390 a.e.i.p.parcial.ParcialApplication.$M  Running with Spring Boot v2.0.6.RELEASE, Spring v5.0.10.RELEASE
+20-12-2018 10:15:57.392 a.e.i.p.parcial.ParcialApplication.$M  No active profile set, falling back to default profiles: default
+20-12-2018 10:16:02.590 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.$M  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+20-12-2018 10:16:04.203 a.e.i.p.parcial.ParcialApplication.$M  Started ParcialApplication in 7.211 seconds (JVM running for 8.103)
+20-12-2018 10:17:20.613 a.e.i.p.parcial.ParcialApplication.$M  Starting ParcialApplication on giuliano-Aspire-E5-571 with PID 4982 (/home/giuliano/eclipse-workspace/ParcialWeb3-master/target/classes started by giuliano in /home/giuliano/eclipse-workspace/ParcialWeb3-master)
+20-12-2018 10:17:20.614 a.e.i.p.parcial.ParcialApplication.$M  Running with Spring Boot v2.0.6.RELEASE, Spring v5.0.10.RELEASE
+20-12-2018 10:17:20.616 a.e.i.p.parcial.ParcialApplication.$M  No active profile set, falling back to default profiles: default
+20-12-2018 10:17:25.968 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.$M  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+20-12-2018 10:17:27.593 a.e.i.p.parcial.ParcialApplication.$M  Started ParcialApplication in 7.415 seconds (JVM running for 8.245)
+20-12-2018 10:18:32.793 a.e.i.p.parcial.ParcialApplication.$M  Starting ParcialApplication on giuliano-Aspire-E5-571 with PID 5166 (/home/giuliano/eclipse-workspace/ParcialWeb3-master/target/classes started by giuliano in /home/giuliano/eclipse-workspace/ParcialWeb3-master)
+20-12-2018 10:18:32.794 a.e.i.p.parcial.ParcialApplication.$M  Running with Spring Boot v2.0.6.RELEASE, Spring v5.0.10.RELEASE
+20-12-2018 10:18:32.799 a.e.i.p.parcial.ParcialApplication.$M  No active profile set, falling back to default profiles: default
+20-12-2018 10:18:37.958 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.$M  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+20-12-2018 10:18:39.574 a.e.i.p.parcial.ParcialApplication.$M  Started ParcialApplication in 7.257 seconds (JVM running for 8.014)
+20-12-2018 10:21:26.674 a.e.i.p.parcial.ParcialApplication.$M  Starting ParcialApplication on giuliano-Aspire-E5-571 with PID 5452 (/home/giuliano/eclipse-workspace/ParcialWeb3-master/target/classes started by giuliano in /home/giuliano/eclipse-workspace/ParcialWeb3-master)
+20-12-2018 10:21:26.676 a.e.i.p.parcial.ParcialApplication.$M  Running with Spring Boot v2.0.6.RELEASE, Spring v5.0.10.RELEASE
+20-12-2018 10:21:26.678 a.e.i.p.parcial.ParcialApplication.$M  No active profile set, falling back to default profiles: default
+20-12-2018 10:21:31.865 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.$M  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+20-12-2018 10:21:33.502 a.e.i.p.parcial.ParcialApplication.$M  Started ParcialApplication in 7.333 seconds (JVM running for 8.072)
+20-12-2018 10:26:38.274 a.e.i.p.parcial.ParcialApplication.$M  Starting ParcialApplication on giuliano-Aspire-E5-571 with PID 5707 (/home/giuliano/eclipse-workspace/ParcialWeb3-master/target/classes started by giuliano in /home/giuliano/eclipse-workspace/ParcialWeb3-master)
+20-12-2018 10:26:38.275 a.e.i.p.parcial.ParcialApplication.$M  Running with Spring Boot v2.0.6.RELEASE, Spring v5.0.10.RELEASE
+20-12-2018 10:26:38.278 a.e.i.p.parcial.ParcialApplication.$M  No active profile set, falling back to default profiles: default
+20-12-2018 10:26:43.528 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.$M  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+20-12-2018 10:26:45.123 a.e.i.p.parcial.ParcialApplication.$M  Started ParcialApplication in 7.284 seconds (JVM running for 8.04)
+20-12-2018 10:37:12.298 a.e.i.p.parcial.ParcialApplication.$M  Starting ParcialApplication on giuliano-Aspire-E5-571 with PID 6110 (/home/giuliano/eclipse-workspace/ParcialWeb3-master/target/classes started by giuliano in /home/giuliano/eclipse-workspace/ParcialWeb3-master)
+20-12-2018 10:37:12.299 a.e.i.p.parcial.ParcialApplication.$M  Running with Spring Boot v2.0.6.RELEASE, Spring v5.0.10.RELEASE
+20-12-2018 10:37:12.301 a.e.i.p.parcial.ParcialApplication.$M  No active profile set, falling back to default profiles: default
+20-12-2018 10:37:17.693 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.$M  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+20-12-2018 10:37:19.202 a.e.i.p.parcial.ParcialApplication.$M  Started ParcialApplication in 7.404 seconds (JVM running for 8.336)
+20-12-2018 10:39:30.947 a.e.i.p.parcial.ParcialApplication.$M  Starting ParcialApplication on giuliano-Aspire-E5-571 with PID 6298 (/home/giuliano/eclipse-workspace/ParcialWeb3-master/target/classes started by giuliano in /home/giuliano/eclipse-workspace/ParcialWeb3-master)
+20-12-2018 10:39:30.948 a.e.i.p.parcial.ParcialApplication.$M  Running with Spring Boot v2.0.6.RELEASE, Spring v5.0.10.RELEASE
+20-12-2018 10:39:30.951 a.e.i.p.parcial.ParcialApplication.$M  No active profile set, falling back to default profiles: default
+20-12-2018 10:39:36.081 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.$M  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+20-12-2018 10:39:37.647 a.e.i.p.parcial.ParcialApplication.$M  Started ParcialApplication in 7.19 seconds (JVM running for 8.041)
+20-12-2018 10:45:34.427 a.e.i.p.parcial.ParcialApplication.$M  Starting ParcialApplication on giuliano-Aspire-E5-571 with PID 6614 (/home/giuliano/eclipse-workspace/ParcialWeb3-master/target/classes started by giuliano in /home/giuliano/eclipse-workspace/ParcialWeb3-master)
+20-12-2018 10:45:34.428 a.e.i.p.parcial.ParcialApplication.$M  Running with Spring Boot v2.0.6.RELEASE, Spring v5.0.10.RELEASE
+20-12-2018 10:45:34.434 a.e.i.p.parcial.ParcialApplication.$M  No active profile set, falling back to default profiles: default
+20-12-2018 10:45:39.694 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.$M  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+20-12-2018 10:45:41.278 a.e.i.p.parcial.ParcialApplication.$M  Started ParcialApplication in 7.321 seconds (JVM running for 8.151)
+20-12-2018 10:48:40.912 a.e.i.p.parcial.ParcialApplication.$M  Starting ParcialApplication on giuliano-Aspire-E5-571 with PID 6828 (/home/giuliano/eclipse-workspace/ParcialWeb3-master/target/classes started by giuliano in /home/giuliano/eclipse-workspace/ParcialWeb3-master)
+20-12-2018 10:48:40.913 a.e.i.p.parcial.ParcialApplication.$M  Running with Spring Boot v2.0.6.RELEASE, Spring v5.0.10.RELEASE
+20-12-2018 10:48:40.915 a.e.i.p.parcial.ParcialApplication.$M  No active profile set, falling back to default profiles: default
+20-12-2018 10:48:46.113 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.$M  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+20-12-2018 10:48:47.707 a.e.i.p.parcial.ParcialApplication.$M  Started ParcialApplication in 7.194 seconds (JVM running for 7.968)
+20-12-2018 10:51:52.948 a.e.i.p.parcial.ParcialApplication.$M  Starting ParcialApplication on giuliano-Aspire-E5-571 with PID 7104 (/home/giuliano/eclipse-workspace/ParcialWeb3-master/target/classes started by giuliano in /home/giuliano/eclipse-workspace/ParcialWeb3-master)
+20-12-2018 10:51:52.949 a.e.i.p.parcial.ParcialApplication.$M  Running with Spring Boot v2.0.6.RELEASE, Spring v5.0.10.RELEASE
+20-12-2018 10:51:52.951 a.e.i.p.parcial.ParcialApplication.$M  No active profile set, falling back to default profiles: default
+20-12-2018 10:51:59.219 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.$M  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+20-12-2018 10:52:00.832 a.e.i.p.parcial.ParcialApplication.$M  Started ParcialApplication in 8.511 seconds (JVM running for 9.311)
+20-12-2018 10:55:02.765 a.e.i.p.parcial.ParcialApplication.$M  Starting ParcialApplication on giuliano-Aspire-E5-571 with PID 7403 (/home/giuliano/eclipse-workspace/ParcialWeb3-master/target/classes started by giuliano in /home/giuliano/eclipse-workspace/ParcialWeb3-master)
+20-12-2018 10:55:02.766 a.e.i.p.parcial.ParcialApplication.$M  Running with Spring Boot v2.0.6.RELEASE, Spring v5.0.10.RELEASE
+20-12-2018 10:55:02.775 a.e.i.p.parcial.ParcialApplication.$M  No active profile set, falling back to default profiles: default
+20-12-2018 10:55:08.327 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.$M  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+20-12-2018 10:55:09.934 a.e.i.p.parcial.ParcialApplication.$M  Started ParcialApplication in 7.705 seconds (JVM running for 8.428)
+20-12-2018 10:58:17.810 a.e.i.p.parcial.ParcialApplication.$M  Starting ParcialApplication on giuliano-Aspire-E5-571 with PID 7742 (/home/giuliano/eclipse-workspace/ParcialWeb3-master/target/classes started by giuliano in /home/giuliano/eclipse-workspace/ParcialWeb3-master)
+20-12-2018 10:58:17.811 a.e.i.p.parcial.ParcialApplication.$M  Running with Spring Boot v2.0.6.RELEASE, Spring v5.0.10.RELEASE
+20-12-2018 10:58:17.813 a.e.i.p.parcial.ParcialApplication.$M  No active profile set, falling back to default profiles: default
+20-12-2018 10:58:23.762 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.$M  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+20-12-2018 10:58:25.747 a.e.i.p.parcial.ParcialApplication.$M  Started ParcialApplication in 8.389 seconds (JVM running for 9.208)

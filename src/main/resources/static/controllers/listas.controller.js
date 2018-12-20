@@ -31,17 +31,41 @@ angular.module('iw3')
                 function (err) {
                 }
             );
+
+
+
+
         };
 
         $scope.addListaController=function(){
-        	if(!confirm("Desea Agregar la Lista"))
+        	if(!confirm("Desea Agregar la Lista?"))
                 return;
             listasService.add($scope.instanciaL).then(
                 function(resp){
+                    $log.log("Aca si esta entrando");
                     $scope.listas.push(resp.data);
                     $scope.instanciaL={};
                     $scope.mostrarAgregarLista = false;
                     $scope.mostrarDivLista();
+                },
+                function (err) {
+                }
+            );
+        };
+
+        $scope.addTareaController=function(){
+            if(!confirm("Desea Agregar la tarea?"))
+                return;
+            tareasService.add($scope.instanciaT).then(
+                function(resp){
+                    //  $scope.tareas.push(resp.data);
+                    $log.log("No esta entrando aca");
+                    $scope.listaConTareas[resp.data.nombreLista.nombre] = resp.data;
+                    $scope.instanciaT={};
+                    // $scope.verTareas('backlog');
+                    //$scope.mostrarAgregarTarea = false;
+                    //$scope.mostrarDIVENTERO = false;
+                    $scope.mostrarDivTarea();
                 },
                 function (err) {
                 }
@@ -95,22 +119,7 @@ angular.module('iw3')
             );
         };
 
-        $scope.addTareaController=function(){
-        	if(!confirm("Desea Agregar la tarea?"))
-                return;
-            tareasService.add($scope.instanciaT).then(
-                function(resp){
-                  //  $scope.tareas.push(resp.data);
-                    $scope.listaConTareas[resp.data.nombreLista.nombre].push(resp.data);
-                    $scope.instanciaT={};
-                   // $scope.verTareas('backlog');
-                    $scope.mostrarAgregarTarea = false;
-                    $scope.mostrarDivLista();
-                },
-                function (err) {
-                }
-            );
-        };
+
 
         $scope.deleteTareaController=function(id,nombrelista){
             if(!confirm("Desea eliminar la tarea seleccionada?"))
@@ -180,19 +189,19 @@ angular.module('iw3')
                 $scope.mostrarAgregarLista = true;
                 $scope.mostrarAgregarTarea = false;
             }
+        };
 
-        }
         $scope.mostrarDivTarea=function(){
             if($scope.mostrarDIVENTERO === false){
-                $scope.mostrarDIVENTERO = true;
                 $scope.mostrarAgregarTarea = false;
                 $scope.mostrarAgregarLista = false;
+                $scope.mostrarDIVENTERO = true;
             }else{
-                $scope.mostrarDIVENTERO =false;
-                $scope.mostrarAgregarTarea = true;
+                $scope.mostrarDIVENTERO = false;
                 $scope.mostrarAgregarLista = false;
+                $scope.mostrarAgregarTarea = true;
             }
-        }
+        };
 
         //$scope.refresh();
         $rootScope.authInfo($scope.refresh);

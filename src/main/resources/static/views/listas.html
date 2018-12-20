@@ -69,7 +69,11 @@
 			</tr>
 			<tr>
 				<td>Prioridad</td>
-				<td><input id="prioridad" type="text" ng-model="instanciaT.prioridad" placeholder="alta-media-baja"/><br/></td>
+				<td><select id="prioridad" required ng-model="instanciaT.prioridad">
+					<option value="Alta">Alta</option>
+					<option value="Media">Media</option>
+					<option value="Baja">Baja</option>
+				</select><br/></td>
 			</tr>
 			<tr>
 				<td>Estimacion</td>
@@ -117,7 +121,7 @@
 			<ul class="col-xs-8">
 				<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item active" aria-current="page"><h4>Tareas</h4></li>
+						<li class="breadcrumb-item active" aria-current="page"><h4>Tareas de ---> {{nombrelista}}</h4></li>
 					</ol>
 				</nav>
 				<table border="1px solid" >
