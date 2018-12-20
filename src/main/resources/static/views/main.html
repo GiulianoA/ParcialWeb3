@@ -1,5 +1,18 @@
-<h1>Menu Principal</h1>
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item active" aria-current="page"><h3>Menu Principal</h3></li>
+		<form class="nav pull-right navbar-nav">
+			<span ng-show="autenticado"><strong><i class="fas fa-user-ninja"></i>{{user.name}}</strong>
+				<span class="pointer" ng-click="logout(true);"> ( Logout )</span>
+			</span>
+		</form>
+	</ol>
+</nav>
 
-<ul>
-	<li><a ng-click="relocate('listas')">Listas</a></li>
-</ul>
+<div class="jumbotron" style="padding-left: 20px">
+	<h1 class="display-4">Bienvenido</h1>
+	<p class="lead">Estamos en desarrollo..</p>
+	<hr class="my-4">
+	<p></p>
+	<a class="btn btn-primary btn-lg" ng-click="relocate('listas')" role="button" >Listas</a>
+</div>

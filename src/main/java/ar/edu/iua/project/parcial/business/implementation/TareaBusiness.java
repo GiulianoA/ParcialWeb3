@@ -66,7 +66,6 @@ public class TareaBusiness implements ITareaBusiness {
         String listaOrigen = tareaOrigen.get().getNombreLista().getNombre().toLowerCase();
 
         HashMap<String, String[]> origenDestino = new HashMap<String, String[]>();
-        System.out.println("isAdmin: " + isAdmin);
         if (isAdmin) {
             origenDestino.put("backlog", new String[]{"todo"});
         } else {
@@ -152,7 +151,7 @@ public class TareaBusiness implements ITareaBusiness {
     }
 
     @Override
-    public TareaSprint add(TareaSprint tarea) throws FechaCreacionNulaException,ListaNotFoundException,InvalidPrioridadException,TareaExisteException {
+    public TareaSprint add(TareaSprint tarea) throws ValorInvalidoEstimationException,FechaCreacionNulaException,ListaNotFoundException,InvalidPrioridadException,TareaExisteException {
 
 
             TareaSprint tareaEnbdd = tareaDAO.getOneTareaByNombre(tarea.getNombre());
@@ -178,6 +177,9 @@ public class TareaBusiness implements ITareaBusiness {
                     throw new FechaCreacionNulaException();
                 }
 
+                if(tarea.getEstimacion()==null){
+                        throw new ValorInvalidoEstimationException();
+                }
 
                 if (lista != null) {
                     tarea.setNombreLista(lista);         //quiere decir que la lista backlog esta creada

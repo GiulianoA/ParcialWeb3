@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface ITareaBusiness {
 
-    public TareaSprint add (TareaSprint tarea) throws FechaCreacionNulaException,ListaNotFoundException,InvalidPrioridadException, TareaExisteException;
+    public TareaSprint add (TareaSprint tarea) throws ValorInvalidoEstimationException,FechaCreacionNulaException,ListaNotFoundException,InvalidPrioridadException, TareaExisteException;
     public List<TareaSprint> getAllTareas() throws BusinessException;
     public TareaSprint getUnaTareaPorNombre(String nombre) throws BusinessException, NotFoundException;
     public void delete(TareaSprint tarea) throws BusinessException, NotFoundException;

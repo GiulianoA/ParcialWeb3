@@ -14,8 +14,8 @@ angular.module('iw3').config(
 				controller : 'MainController'
 			})
 			.when('/listas', {
-				templateUrl : 'views/listas.html',
-				controller : 'ListasController'
+				templateUrl : 'views/listastareas.html',
+				controller : 'ListasTareasController'
 			})
 			.otherwise({
 				redirectTo : '/'

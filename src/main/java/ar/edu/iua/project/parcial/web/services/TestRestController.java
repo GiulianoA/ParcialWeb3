@@ -16,16 +16,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(Constantes.URL_TEST)
 public class TestRestController extends BaseRestController{
 
-    @GetMapping("/admin")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/lider")
+    @PreAuthorize("hasRole('ROLE_LIDER')")
     public ResponseEntity<String> onlyAdmin() {
-        return new ResponseEntity<String>("Servicio admin", HttpStatus.OK);
+        return new ResponseEntity<String>("Servicio Lider", HttpStatus.OK);
     }
 
-    @GetMapping("/user")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping("/desar")
+    @PreAuthorize("hasRole('ROLE_DESAR')")
     public ResponseEntity<String> onlyUser() {
-        return new ResponseEntity<String>("Servicio user", HttpStatus.OK);
+        return new ResponseEntity<String>("Servicio Desarrolador", HttpStatus.OK);
     }
 
     @GetMapping("/adminoruser")

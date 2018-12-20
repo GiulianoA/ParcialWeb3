@@ -3,11 +3,19 @@ angular.module('iw3')
         var service = this;
 
         service.responseError = function(response) {
-            if(response.status==401) {
+            if(response.status===401) {
                 $rootScope.openLoginForm();
-            } else {
+            }else if(response.status===406){
+                $rootScope.alertaModal();
+                $rootScope.authInfo();
+            }else if(response.status===404){
+                $rootScope.alertaModal();
+                $rootScope.authInfo();
+        } else{
                 $rootScope.authInfo();
             }
             return response;
         };
-    })
+
+
+    });

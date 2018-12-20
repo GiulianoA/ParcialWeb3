@@ -43,6 +43,9 @@ public class TareaRESTController {
         }catch (FechaCreacionNulaException exe){
             log.error("La Fecha de creacion no puede ser nula");
             return new ResponseEntity<TareaSprint>(HttpStatus.NOT_ACCEPTABLE);
+        }catch (ValorInvalidoEstimationException v){
+            log.error("La estimacion no puede ser nula");
+            return new ResponseEntity<TareaSprint>(HttpStatus.NOT_ACCEPTABLE);
         }
 
     }
